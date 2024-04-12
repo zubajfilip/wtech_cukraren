@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\DonutController;
 
 
 Route::get('/', function () {
@@ -14,3 +16,11 @@ Route::get('/penis', function () {
 });
 
 Route::resource('users', UserController::class);
+
+Route::resource('home', ProductController::class);
+
+Route::resource('donuts', DonutController::class)->names([
+    'index' => 'donuts'
+]);;
+
+// Route::get('donuts', 'DonutController@index')->name('donuts');

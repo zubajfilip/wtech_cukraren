@@ -1,0 +1,75 @@
+.products-spacing {
+    margin-bottom: 50px; /* Adjust the value for desired spacing */
+}
+
+@media (min-width: 767.5px) {
+    .md-text {
+        font-size: 40px;
+    }
+
+    .hidden-md-up {
+        display: none;
+    }
+
+}
+
+h2.row{
+    margin-bottom: 60px;
+    margin-top: 30px;
+}
+
+@media(max-width: 767.5px) {
+    .md-margin-bot {
+        margin-bottom: 10px;
+    }
+
+    .hidden-md-up {
+        display: block;
+    }
+    .md-text {
+        font-size: 40px;
+    }
+}
+
+.footer {
+    height: 200px;
+}
+
+.contact-info{
+    border-left: 1px solid rgb(100, 100, 100);
+    
+    padding-left: 15px;
+}
+
+.line-under{
+    border-bottom: 1px solid rgb(100, 100, 100);
+}
+
+
+@media(max-width: 767.5px) {
+    .md-margin-bot {
+        margin-bottom: 10px;
+    }
+
+    .hidden-md-up {
+        display: block;
+    }
+
+    .md-text {
+        font-size: 40px;
+    }
+}
+
+
+.col-md-4.col-sm-6 {
+    object-fit: cover;
+}
+
+.product {
+    margin-bottom: 15px;
+}
+
+.price {
+    font-weight: bold;
+}
+
