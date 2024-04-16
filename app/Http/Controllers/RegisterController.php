@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class DonutController extends Controller
+class RegisterController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('donuts.donuts');
+        return view('login.register');
+
     }
 
     /**

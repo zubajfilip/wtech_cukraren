@@ -15,24 +15,13 @@
 <body>
     @include('components.header')
 
-    <!-- elements in this div are gonna be in the toggled navbar -->
-    <div class="container-fluid collapse navbar-collapse hidden-md-up" id="navbarSupportedContent">
-
-        <a href="../../login/login.html"> <button
-                class="col-12 btn btn-primary mb-2 justify-content-center">Login</button> </a>
-
-        <form class="col d-flex" role="search">
-            <input class="form-control me-2 mb-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success mb-2" type="submit">Search</button>
-        </form>
-    </div>
 
     <main>
 
         <div class="container-fluid products">
             <nav class="container-fluid">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item "><a href="../../../../public/index.html">Domov</a></li>
+                    <li class="breadcrumb-item "><a href="{{ route('home') }}">Domov</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Donuty</li>
                 </ol>
             </nav>
