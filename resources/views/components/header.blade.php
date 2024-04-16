@@ -2,11 +2,11 @@
     <nav class="navbar navbar-expand-md">
         <div class="container-fluid">
 
-            <a class="navbar-brand" href="index.html"><img class="img-fluid"
+            <a class="navbar-brand" href="{{ route('home') }}"><img class="img-fluid"
                     src="images/logo.png" width="140" height="100"></a>
             <div class="d-flex">
 
-                <a class="nav-link ms-2 md-text hidden-md-up" href="../src/pages/shopping_cart/cart_1.html">🛒</a>
+                <a class="nav-link ms-2 md-text hidden-md-up">🛒</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -23,11 +23,25 @@
                     <input class="form-control me-2" type="search" placeholder="Search">
                     <button class="btn btn-outline-success me-2" type="submit">Search</button>
                 </form>
-                <a href="../src/pages/login/login.html"> <button class="btn btn-primary">Login</button></a>
+                <a> <button class="btn btn-primary">Login</button></a>
 
-                <a class="nav-link ms-2 md-text" href="../src/pages/shopping_cart/cart_1.html">🛒</a> <!-- TODO: pridat href na kosik ked bude done -->
+                <a class="nav-link ms-2 md-text">🛒</a>
 
             </div>
         </div>
     </nav>
+
+    <!-- elements in this div are gonna be in the toggled navbar -->
+    <div class="container-fluid collapse navbar-collapse hidden-md-up" id="navbarSupportedContent">
+        
+        <a><button class="col-12 btn btn-primary mb-2 justify-content-center">Login</button></a>
+        
+        <form class="col d-flex" role="search">
+            <input class="form-control me-2 mb-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success mb-2" type="submit">Search</button>
+        </form>
+    </div>
+
 </header>
+
+ <!-- TODO: pridat href na kosiky a loginy ked budu endpointy rdy -->
