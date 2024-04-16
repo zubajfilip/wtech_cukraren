@@ -33,6 +33,11 @@ h2.row{
 
 .footer {
     height: 200px;
+    background-color: #E3B7A0;
+}
+
+.header {
+    background-color: #E3B7A0;
 }
 
 .contact-info{
@@ -72,4 +77,25 @@ h2.row{
 .price {
     font-weight: bold;
 }
+
+body{
+    background-color: #FFF5E4;
+}
+
+a{
+    color:#7D0A0A;
+}
+
+.btn-secondary, .btn-outline-success:hover, .btn-primary{
+    background-color:#7D0A0A;
+    color: #FFFFFF;
+    border-color:#7D0A0A;
+}
+
+.btn-secondary:hover,.btn-outline-success, .btn-primary:hover{
+    color:#7D0A0A;
+    background-color: #FFFFFF;
+    border-color: #7D0A0A;
+}
+
 

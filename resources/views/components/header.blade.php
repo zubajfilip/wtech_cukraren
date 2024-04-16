@@ -1,5 +1,5 @@
-<header>
-    <nav class="navbar navbar-expand-md bg-body-tertiary">
+<header class="header">
+    <nav class="navbar navbar-expand-md">
         <div class="container-fluid">
 
             <a class="navbar-brand" href="index.html"><img class="img-fluid"

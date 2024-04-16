@@ -145,7 +145,7 @@
                         <p>Modrý Posýpaný Donut</p>
                         <p class="price">0,89€/ks</p>
                     </div>
-                    <button id="5" type="button" class="btn btn-secondary buy-button">Objednať</button>
+                    <button id="5" type="button" class="btn btn-secondary buy-button donut-button-order">Objednať</button>
                 </div>
             </div>
         </div>
