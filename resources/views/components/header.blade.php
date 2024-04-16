@@ -23,7 +23,7 @@
                     <input class="form-control me-2" type="search" placeholder="Search">
                     <button class="btn btn-outline-success me-2" type="submit">Search</button>
                 </form>
-                <a> <button class="btn btn-primary">Login</button></a>
+                <a href="{{ route('login') }}"> <button class="btn btn-primary">Login</button></a>
 
                 <a class="nav-link ms-2 md-text">🛒</a>
 
@@ -34,7 +34,7 @@
     <!-- elements in this div are gonna be in the toggled navbar -->
     <div class="container-fluid collapse navbar-collapse hidden-md-up" id="navbarSupportedContent">
         
-        <a><button class="col-12 btn btn-primary mb-2 justify-content-center">Login</button></a>
+        <a href="{{ route('login') }}"><button class="col-12 btn btn-primary mb-2 justify-content-center">Login</button></a>
         
         <form class="col d-flex" role="search">
             <input class="form-control me-2 mb-2" type="search" placeholder="Search" aria-label="Search">
