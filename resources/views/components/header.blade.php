@@ -6,7 +6,7 @@
                     src="images/logo.png" width="140" height="100"></a>
             <div class="d-flex">
 
-                <a class="nav-link ms-2 md-text hidden-md-up">🛒</a>
+                <a href="{{ route('cart1') }}" class="nav-link ms-2 md-text hidden-md-up">🛒</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -25,7 +25,7 @@
                 </form>
                 <a href="{{ route('login') }}"> <button class="btn btn-primary">Login</button></a>
 
-                <a class="nav-link ms-2 md-text">🛒</a>
+                <a href="{{ route('cart1') }}" class="nav-link ms-2 md-text">🛒</a>
 
             </div>
         </div>
