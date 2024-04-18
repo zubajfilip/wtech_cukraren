@@ -177,6 +177,8 @@
         </div>
     </div>
 
+
+    <!-- TODO: ZMENIT ACTION NA ENDPOINT KTORY VRATI PAGE  -->
     <form action="./cart_3.html" method="post">
         <main class="container-fluid mb-4 mt-4">
             <div class="main-section">
@@ -269,7 +271,7 @@
 
         <div class="container-fluid d-flex mb-4 mt-2">
             <div class="col-6 d-flex justify-content-left">
-                <a href="cart_1.html"><button type="button" class="btn btn-secondary">Spät</button></a>
+                <a href="{{ route('cart1') }}"><button type="button" class="btn btn-secondary">Spät</button></a>
             </div>
             <div class="col-6 d-flex justify-content-end">
                 <button type="submit" class="btn btn-success">Pokračovať</button>

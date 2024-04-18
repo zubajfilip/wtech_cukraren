@@ -167,10 +167,10 @@
     </main>
     <div class="container-fluid d-flex mb-4">
         <div class="col-6 d-flex justify-content-left">
-            <a href="../../../public/index.html"><button type="button" class="btn btn-secondary">Spät</button></a>
+            <a href="{{ route('home') }}"><button type="button" class="btn btn-secondary">Spät</button></a>
         </div>
         <div class="col-6 d-flex justify-content-end">
-            <a href="cart_2.html"><button type="button" class="btn btn-success">Pokračovať</button></a>
+            <a href="{{ route('cart2') }}"><button type="button" class="btn btn-success">Pokračovať</button></a>
         </div>
     </div>
 

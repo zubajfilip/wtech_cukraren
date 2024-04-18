@@ -302,7 +302,7 @@
         </main>
         <div class="container-fluid d-flex mb-4 mt-2">
             <div class="col-3 d-flex justify-content-left">
-                <a href="cart_2.html"><button type="button" class="btn btn-secondary">Spät</button></a>
+                <a href="{{ route('cart2') }}"><button type="button" class="btn btn-secondary">Spät</button></a>
             </div>
             <div class="col d-flex justify-content-end">
                 <button type="submit" class="btn btn-success">Potvrdiť objednávku</button>
