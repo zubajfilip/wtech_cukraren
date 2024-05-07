@@ -2,13 +2,7 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cukraren_test</title>
-    <!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    @include('components.head')
 </head>
 
 <body>
@@ -166,7 +160,7 @@
         }
     </style> -->
 
-    @include('components.header')
+    @include('components.nav')
 
 
     <div class="container-fluid shipping-phase d-flex col-12 mt-4 mb-4">
@@ -302,7 +296,7 @@
         </main>
         <div class="container-fluid d-flex mb-4 mt-2">
             <div class="col-3 d-flex justify-content-left">
-                <a href="{{ route('cart2') }}"><button type="button" class="btn btn-secondary">Spät</button></a>
+                <a href="/cart2"><button type="button" class="btn btn-secondary">Spät</button></a>
             </div>
             <div class="col d-flex justify-content-end">
                 <button type="submit" class="btn btn-success">Potvrdiť objednávku</button>

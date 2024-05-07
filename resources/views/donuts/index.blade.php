@@ -2,18 +2,11 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cukraren_test</title>
-    <!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-
+    @include('components.head')
 </head>
 
 <body>
-    @include('components.header')
+    @include('components.nav')
 
 
     <main>
@@ -21,7 +14,7 @@
         <div class="container-fluid products">
             <nav class="container-fluid">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item "><a href="{{ route('home') }}">Domov</a></li>
+                    <li class="breadcrumb-item "><a href="/home">Domov</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Donuty</li>
                 </ol>
             </nav>
@@ -76,66 +69,20 @@
 
 
             <div class="row ">
+            @foreach ($products as $product)
                 <div
                     class="col-md-4 col-sm-6 d-flex flex-column align-items-center justify-content-end product text-center">
-                    <a href="./detail_page_chocodonut.html">
-                        <img src="./images/choco_glaze.jpg" alt="Chocolate glazed donut" width="190" height="150"
+                    <a href="{{ route('donuts.show', $product->id) }}">
+                    <img src="{{ asset('storage/' . $product->ImagePath) }}" alt="{{ $product->name }}" width="190" height="150"
                             class="img-fluid">
                     </a>
                     <div class="name-price">
-                        <p>Čokoládový Donut</p>
-                        <p class="price">0,89€/ks</p>
+                        <p>{{ $product->name }}</p>
+                        <p class="price">{{$product->price}}€/ks</p>
                     </div>
                     <button id="1" type="button" class="btn btn-secondary buy-button">Objednať</button>
                 </div>
-                <div
-                    class="col-md-4 col-sm-6 d-flex flex-column align-items-center justify-content-end product text-center">
-                    <a href="#">
-                        <img src="./images/choco_sprinkle.jpg" alt="Chocolate sprinkled glazed donut" width="190"
-                            height="150" class="img-fluid">
-                    </a>
-                    <div class="name-price">
-                        <p>Čokoládový Posýpaný Donut</p>
-                        <p class="price">0,89€/ks</p>
-                    </div>
-                    <button id="2" type="button" class="btn btn-secondary buy-button">Objednať</button>
-                </div>
-                <div
-                    class="col-md-4 col-sm-6 d-flex flex-column align-items-center justify-content-end product text-center">
-                    <a href="#">
-                        <img src="./images/classic_glazed.jpg" alt="Classic glazed donut" width="190" height="150"
-                            class="img-fluid">
-                    </a>
-                    <div class="name-price">
-                        <p>Klasický Glazúrový Donut</p>
-                        <p class="price">0,89€/ks</p>
-                    </div>
-                    <button id="3" type="button" class="btn btn-secondary buy-button">Objednať</button>
-                </div>
-                <div
-                    class="col-md-4 col-sm-6 d-flex flex-column align-items-center justify-content-end product text-center">
-                    <a href="#">
-                        <img src="./images/classic_sugar.jpg" alt="Classic sugar donut" width="190" height="150"
-                            class="img-fluid">
-                    </a>
-                    <div class="name-price">
-                        <p>Cukrový Donut</p>
-                        <p class="price">0,89€/ks</p>
-                    </div>
-                    <button id="4" type="button" class="btn btn-secondary buy-button">Objednať</button>
-                </div>
-                <div
-                    class="col-md-4 col-sm-6 d-flex flex-column align-items-center justify-content-end product text-center">
-                    <a href="#">
-                        <img src="./images/blue_sprinkle.jpg" alt="Donut with Blue toping and sprinlkes" width="190"
-                            height="150" class="img-fluid">
-                    </a>
-                    <div class="name-price">
-                        <p>Modrý Posýpaný Donut</p>
-                        <p class="price">0,89€/ks</p>
-                    </div>
-                    <button id="5" type="button" class="btn btn-secondary buy-button">Objednať</button>
-                </div>
+            @endforeach
             </div>
         </div>
     </main>

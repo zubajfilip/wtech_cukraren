@@ -9,43 +9,28 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\Cart1Controller;
 use App\Http\Controllers\Cart2Controller;
 use App\Http\Controllers\Cart3Controller;
-
+use App\Http\Controllers\SearchController;
 
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/penis', function () {
-    return view('penis');
-});
-
 Route::resource('users', UserController::class);
 
-Route::resource('home', ProductController::class)->names([
-    'index' => 'home'
-]);
+Route::resource('home', ProductController::class);
 
-Route::resource('donuts', DonutController::class)->names([
-    'index' => 'donuts'
-]);
+Route::resource('donuts', DonutController::class);
 
-Route::resource('login', LoginController::class)->names([
-    'index' => 'login'
-]);
+Route::resource('login', LoginController::class);
 
-Route::resource('register', RegisterController::class)->names([
-    'index' => 'register'
-]);
+Route::resource('register', RegisterController::class);
 
-Route::resource('cart1', Cart1Controller::class)->names([
-    'index' => 'cart1'
-]);
+Route::resource('cart1', Cart1Controller::class);
 
-Route::resource('cart2', Cart2Controller::class)->names([
-    'index' => 'cart2'
-]);
+Route::resource('cart2', Cart2Controller::class);
 
-Route::resource('cart3', Cart3Controller::class)->names([
-    'index' => 'cart3'
-]);
+Route::resource('cart3', Cart3Controller::class);
+
+Route::get('/search', [SearchController::class, 'search'])->name('search');
+
