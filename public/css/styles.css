@@ -11,6 +11,9 @@
         display: none;
     }
 
+    .buy-section {
+        display: flex;
+    }
 }
 
 h2.row{
@@ -63,6 +66,10 @@ h2.row{
     .md-text {
         font-size: 40px;
     }
+
+    .counter {
+        margin-bottom: 10px;
+    }
 }
 
 
@@ -102,17 +109,6 @@ a{
 .products-spacing {
     margin-bottom: 50px;
     /* Adjust the value for desired spacing */
-}
-
-@media (min-width: 767.5px) {
-    .md-text {
-        font-size: 40px;
-    }
-
-    .hidden-md-up {
-        display: none;
-    }
-
 }
 
 .last-product {
@@ -198,8 +194,38 @@ h2.row {
     border-radius: 20px;
 }
 
-.contact-info{
-    border-left: 1px solid rgb(100, 100, 100);
-    
-    padding-left: 15px;
+
+.products-spacing {
+    margin-bottom: 50px;
+    /* Adjust the value for desired spacing */
 }
+
+@media (min-width: 767.5px) {
+    .md-text {
+        font-size: 40px;
+    }
+
+    .hidden-md-up {
+        display: none;
+    }
+
+    .buy-section {
+        display: flex;
+    }
+}
+
+.donut-product-outline {
+    padding: 20px;
+    padding-left: 40px;
+    padding-right: 40px;
+    border: 1px solid black;
+    border-radius: 40px;
+    width: fit-content;
+    /* padding: 20px; */
+}
+
+
+
+
+
+
