@@ -10,6 +10,8 @@ use App\Http\Controllers\Cart1Controller;
 use App\Http\Controllers\Cart2Controller;
 use App\Http\Controllers\Cart3Controller;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\ShoppingCartController;
+use App\Http\Middleware\LoadCartData;
 
 
 Route::get('/', function () {
@@ -19,6 +21,10 @@ Route::get('/', function () {
 Route::resource('users', UserController::class);
 
 Route::resource('home', ProductController::class);
+
+// Route::get('/donuts', [DonutController::class, 'index'])->middleware(LoadCartData::class);
+
+// Route::get('/donuts/{id}', [DonutController::class, 'show'])->middleware(LoadCartData::class);
 
 Route::resource('donuts', DonutController::class);
 
@@ -33,4 +39,7 @@ Route::resource('cart2', Cart2Controller::class);
 Route::resource('cart3', Cart3Controller::class);
 
 Route::get('/search', [SearchController::class, 'search'])->name('search');
+
+Route::get('/get-cart-data', [ShoppingCartController::class, 'getCartData']);
+
 

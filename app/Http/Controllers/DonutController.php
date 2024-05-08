@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class DonutController extends Controller
@@ -37,8 +38,8 @@ class DonutController extends Controller
      */
     public function show(string $id)
     {
-        $product = Product::findOrFail($id);
-        $details = json_decode($product->details, true);
+        $product = Product::where('id', $id)->first();
+        $details = $product ? json_decode($product->details, true) : null;
         return view('donuts.detail', [
             'product' => $product,
             'details' => $details,
@@ -67,20 +68,5 @@ class DonutController extends Controller
     public function destroy(string $id)
     {
         //
-    }
-
-    /**
-     * Handle search request.
-     */
-    public function search(Request $request)
-    {
-        // Get the search query from the request
-        $searchQuery = $request->input('search');
-
-        // Perform the search in the products table
-        $products = Product::where('name', 'like', "%$searchQuery%")->get();
-
-        // Pass the search results to the view
-        return view('search-results', ['products' => $products, 'searchQuery' => $searchQuery]);
     }
 }
