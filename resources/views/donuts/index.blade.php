@@ -73,14 +73,14 @@
                 <div
                     class="col-md-4 col-sm-6 d-flex flex-column align-items-center justify-content-end product text-center">
                     <a href="{{ route('donuts.show', $product->id) }}">
-                    <img src="{{ asset('storage/' . $product->ImagePath) }}" alt="{{ $product->name }}" width="190" height="150"
+                    <img src="{{ asset('storage/' . $product->imagePath) }}" alt="{{ $product->name }}" width="190" height="150"
                             class="img-fluid">
                     </a>
                     <div class="name-price">
                         <p>{{ $product->name }}</p>
                         <p class="price">{{$product->price}}€/ks</p>
                     </div>
-                    <button id="1" type="button" class="btn btn-secondary buy-button">Objednať</button>
+                    <button id="{{$product->id}}" type="button" class="btn btn-secondary buy-button">Objednať</button>
                 </div>
             @endforeach
             </div>
@@ -92,7 +92,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-    <script src="donuts.js"></script>
+    <script src="{{ asset('js/donuts.js') }}"></script>
 </body>
 
 </html>

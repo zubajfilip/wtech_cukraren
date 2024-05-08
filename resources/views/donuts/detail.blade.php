@@ -25,7 +25,7 @@
                     <p>{{$product->description}}</p>
                 </div>
                 <div>
-                    <img src="{{ asset('storage/' . $product->ImagePath) }}" alt="{{ $product->name }}" class="img-fluid" width="190"
+                    <img src="{{ asset('storage/' . $product->imagePath) }}" alt="{{ $product->name }}" class="img-fluid" width="190"
                         height="150">
                 </div>
                 <div class="price">
