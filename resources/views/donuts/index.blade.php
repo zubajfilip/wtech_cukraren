@@ -8,9 +8,7 @@
 <body>
     @include('components.nav')
 
-
     <main>
-
         <div class="container-fluid products">
             <nav class="container-fluid">
                 <ol class="breadcrumb">
@@ -82,7 +80,7 @@
 
                     @php
                         $shoppingCart = $user->shoppingCart;
-                        $cartItem = $shoppingCart ? $shoppingCart->items->where('productId', $product->id)->first() : null;
+                        $cartItem = $shoppingCart ? $shoppingCart->items->where('productId', $product->id)->first()->quantity : null;
                         $quantity = $cartItem ? $cartItem->quantity : 0;
                     @endphp
 

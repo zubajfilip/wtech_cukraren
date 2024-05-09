@@ -31,26 +31,26 @@
                 <div class="price">
                     <p>{{$product->price}}€/ks</p>
                 </div>
-                
-                    
-                    <div class="row buy-section d-flex justify-content-center">
-                        @csrf
-                        <div class="col-md-6 col-12 counter d-flex justify-content-center align-items-center">
 
 
-                            @php
-                            $shoppingCart = $user->shoppingCart;
-                            $cartItem = $shoppingCart ? $shoppingCart->items->where('productId', $product->id)->first()
-                            :
-                            null;
-                            $quantity = $cartItem ? $cartItem->quantity : 0;
-                            @endphp
+                <div class="row buy-section d-flex justify-content-center">
+                    @csrf
+                    <div class="col-md-6 col-12 counter d-flex justify-content-center align-items-center">
 
-                            <button type="button" class="btn btn-outline-secondary decrement-button">-</button>
-                            <span class="quantity-value me-4 ms-4" style="font-size: 24px">{{$quantity}}</span>
-                            <button type="button" class="btn btn-outline-secondary increment-button">+</button>
-                        </div>
-                        <div class="col-md-6 col-12">
+
+                        @php
+                        $shoppingCart = $user->shoppingCart;
+                        $cartItem = $shoppingCart ? $shoppingCart->items->where('productId', $product->id)->first()
+                        :
+                        null;
+                        $quantity = $cartItem ? $cartItem->quantity : 0;
+                        @endphp
+
+                        <button type="button" class="btn btn-outline-secondary decrement-button">-</button>
+                        <span class="quantity-value me-4 ms-4" style="font-size: 24px">{{$quantity}}</span>
+                        <button type="button" class="btn btn-outline-secondary increment-button">+</button>
+                    </div>
+                    <div class="col-md-6 col-12">
                         <form action="{{ route('purchase') }}" method="post">
                             @csrf
                             <input type="hidden" name="product_id" value="{{ $product->id }}">
@@ -61,20 +61,22 @@
                             </button>
                         </form>
                     </div>
-            </div>
-
-            <div class="mt-4 mb-4">
-                <div class="container-fluid details text-center donut-product-outline">
-
-                    <h3 class="text-center">Detaily</h3>
-                    <p>Hmotnosť {{ $product->weight }}</p>
-                    @foreach ($categories as $category)
-                    <p>{{ $category->name }}</p>
-                    @endforeach
                 </div>
 
+                <div class="mt-4 mb-4">
+                    <div class="container-fluid details text-left donut-product-outline">
+
+                        <h3 class="text-left">Detaily</h3>
+                        <ul>
+                            <li>hmotnosť {{ $product->weight }}</li>
+                            @foreach ($categories as $category)
+                            <li>{{ $category->name }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+
+                </div>
             </div>
-        </div>
         </div>
 
     </main>
