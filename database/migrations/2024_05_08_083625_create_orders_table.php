@@ -19,10 +19,10 @@ return new class extends Migration
             $table->string('customerPhoneNumber', 13)->nullable();
             $table->enum('paymentMethod', ['applePay', 'creditCard', 'cashOnDelivery']);
             $table->enum('deliveryMethod', ['personalDelivery', 'courier']);
-            $table->uuid('deliveryAddressId');
+            $table->foreignUuid('deliveryAddressId')->references('id')->on('addresses');
             $table->timestamps();
 
-            $table->foreign('deliveryAddressId')->references('id')->on('addresses');
+            
         });
     }
 

@@ -13,10 +13,9 @@ return new class extends Migration
     {
         Schema::create('admins', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->id('userId');
+            $table->foreignid('userId')->references('id')->on('users');
             $table->timestamps();
             
-            $table->foreign('userId')->references('id')->on('users');
         });
     }
 

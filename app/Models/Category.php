@@ -5,7 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Donut extends Model
+class Category extends Model
 {
     use HasFactory;
+
+    public function getIdAttribute()
+    {
+        return (string) $this->attributes['id']; 
+    }
 }

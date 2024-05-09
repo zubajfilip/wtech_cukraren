@@ -30,6 +30,8 @@ Route::post('/increase_product_quantity', [ShoppingCartController::class, 'incre
 
 Route::post('/decrease_product_quantity', [ShoppingCartController::class, 'decreaseProductQuantity'])->name('decrease_product_quantity');
 
+Route::post('/product_filter', [ProductController::class, 'filter'])->name('product_filter');
+
 
 // Route::post('/remove_item', [ShoppingCartController::class, 'removeItem'])->name('remove_item');
 Route::post('/remove-item/{productId}', [ShoppingCartController::class, 'removeItem'])->name('remove_item');
