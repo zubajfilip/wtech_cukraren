@@ -37,4 +37,6 @@ class CartItem extends Model
     {
         return (string) $this->attributes['id']; 
     }
+
+    
 }

@@ -19,6 +19,13 @@ class DonutController extends Controller
         
         $user = Auth::user();
 
+        // if(!$user){
+            // $user-> 
+            // dd($user);
+        // }
+
+        // dd($user->shoppingCart);
+
         // Assuming your user model has an 'email' attribute
         
         return view('donuts.index', [

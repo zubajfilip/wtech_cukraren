@@ -47,28 +47,35 @@ class DatabaseSeeder extends Seeder
             'userId' => $admin_user->id,
         ]);
 
-        // other seeders
+        // Categories seeder
+        $sprinkled_category = Category::create([
+            'id' => Str::uuid(),
+            'name' => 'posýpaný',
+        ]);
+
+        $glazed_category = Category::create([
+            'id' => Str::uuid(),
+            'name' => 'glazúrovaný',
+        ]);
 
         $topping_category = Category::create([
             'id' => Str::uuid(),
-            'name' => 'topping',
+            'name' => 'poliatý',
         ]);
 
-        Category::create([
+
+        $stuffed_category = Category::create([
             'id' => Str::uuid(),
-            'name' => 'stuffed',
+            'name' => 'plnený',
         ]);
 
-        $choco_category = Category::create([
-            'id' => Str::uuid(),
-            'name' => 'chocolate',
-        ]);
+        // Donuts seeders
 
         $coko_donut = Product::create([
             'id' => Str::uuid(),
             'name' => 'Čokoládový donut',
             'type' => 'Donut',
-            'description' => 'Description of the new product',
+            'description' => 'Toto je description text pre Čoko donut',
             'price' => 0.90,
             'imagePath' => 'images/choco_glaze.jpg',
             'weight' => '100g',
@@ -84,14 +91,76 @@ class DatabaseSeeder extends Seeder
             'weight' => '90g',
         ]);
 
+        $coko_sprinkle_donut = Product::create([
+            'id' => Str::uuid(),
+            'name' => 'Čokoládový posýpaný donut',
+            'type' => 'Donut',
+            'description' => 'Toto je description text pre Čokoládový posýpaný donut',
+            'price' => 2,
+            'imagePath' => 'images/choco_sprinkle.jpg',
+            'weight' => '100g',
+        ]);
+
+        
+        $classic_donut = Product::create([
+            'id' => Str::uuid(),
+            'name' => 'Klasický glazúrový Donut',
+            'type' => 'Donut',
+            'description' => 'Toto je description text pre Klasický Glazúrový Donut',
+            'price' => 0.7,
+            'imagePath' => 'images/classic_glazed.jpg',
+            'weight' => '89g',
+        ]);
+
+        $blue_donut = Product::create([
+            'id' => Str::uuid(),
+            'name' => 'Modrý posýpaný donut',
+            'type' => 'Donut',
+            'description' => 'Toto je description text pre Modrý posýpaný donut',
+            'price' => 5,
+            'imagePath' => 'images/blue_sprinkle.jpg',
+            'weight' => '130g',
+        ]);
+
+        // category product join table seeders
         CategoryProduct::create([
             'productId' => $coko_donut->id,
             'categoryId' => $topping_category->id,
         ]);
 
         CategoryProduct::create([
-            'productId' => $coko_donut->id,
-            'categoryId' => $choco_category->id,
+            'productId' => $coko_sprinkle_donut->id,
+            'categoryId' => $sprinkled_category->id,
+        ]);
+
+        CategoryProduct::create([
+            'productId' => $coko_sprinkle_donut->id,
+            'categoryId' => $topping_category->id,
+        ]);
+    
+        CategoryProduct::create([
+            'productId' => $classic_donut->id,
+            'categoryId' => $glazed_category->id,
+        ]);
+
+        CategoryProduct::create([
+            'productId' => $suga_donut->id,
+            'categoryId' => $topping_category->id,
+        ]);
+
+        CategoryProduct::create([
+            'productId' => $blue_donut->id,
+            'categoryId' => $topping_category->id,
+        ]);
+
+        CategoryProduct::create([
+            'productId' => $blue_donut->id,
+            'categoryId' => $sprinkled_category->id,
+        ]);
+
+        CategoryProduct::create([
+            'productId' => $blue_donut->id,
+            'categoryId' => $stuffed_category->id,
         ]);
     }
 }
