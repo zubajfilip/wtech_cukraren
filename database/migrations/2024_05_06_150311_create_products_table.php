@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('description');
             $table->decimal('price', 10, 2);
             $table->text('imagePath');
-            $table->json('details');
+            $table->string('weight');
             $table->timestamps();
         });
     }

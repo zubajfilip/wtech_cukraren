@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('categoryProducts', function (Blueprint $table) {
+            $table->id();
             $table->foreignUuid('productId')->references('id')->on('products');
             $table->foreignUuid('categoryId')->references('id')->on('categories');
             $table->timestamps();

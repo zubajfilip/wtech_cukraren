@@ -16,8 +16,7 @@ return new class extends Migration
             $table->foreignUuid('shoppingCartId')->references('id')->on('shoppingCarts');
             $table->foreignUuid('productId')->references('id')->on('products');
             $table->integer('quantity');
-            $table->timestamps();
-            
+            $table->timestamps(); 
         });
     }
 

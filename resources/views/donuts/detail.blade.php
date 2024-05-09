@@ -67,8 +67,9 @@
                 <div class="container-fluid details text-center donut-product-outline">
 
                     <h3 class="text-center">Detaily</h3>
-                    @foreach ($details as $detail)
-                    <p>{{$detail}}</p>
+                    <p>Hmotnosť {{ $product->weight }}</p>
+                    @foreach ($categories as $category)
+                    <p>{{ $category->name }}</p>
                     @endforeach
                 </div>
 

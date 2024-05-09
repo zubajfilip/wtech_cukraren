@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Admin extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'id',
+        'userId',
+    ];
+
+    public function admin()
+    {
+        return $this->hasOne(User::class, 'id');
+    }
 }
