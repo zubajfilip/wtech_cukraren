@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\Cart3Controller;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ShoppingCartController;
 use App\Http\Middleware\LoadCartData;
+use App\Http\Controllers\Auth;
 
 
 Route::get('/', function () {
@@ -22,9 +24,17 @@ Route::resource('users', UserController::class);
 
 Route::resource('home', ProductController::class);
 
-// Route::get('/donuts', [DonutController::class, 'index'])->middleware(LoadCartData::class);
+Route::post('/purchase', [ShoppingCartController::class, 'purchase'])->name('purchase');
 
-// Route::get('/donuts/{id}', [DonutController::class, 'show'])->middleware(LoadCartData::class);
+Route::post('/increase_product_quantity', [ShoppingCartController::class, 'increaseProductQuantity'])->name('increase_product_quantity');
+
+Route::post('/decrease_product_quantity', [ShoppingCartController::class, 'decreaseProductQuantity'])->name('decrease_product_quantity');
+
+
+// Route::post('/remove_item', [ShoppingCartController::class, 'removeItem'])->name('remove_item');
+Route::post('/remove-item/{productId}', [ShoppingCartController::class, 'removeItem'])->name('remove_item');
+
+
 
 Route::resource('donuts', DonutController::class);
 
@@ -32,7 +42,9 @@ Route::resource('login', LoginController::class);
 
 Route::resource('register', RegisterController::class);
 
-Route::resource('cart1', Cart1Controller::class);
+// Route::get('/cart1', [ShoppingCartController::class, 'index']);
+
+Route::resource('cart1', ShoppingCartController::class);
 
 Route::resource('cart2', Cart2Controller::class);
 
@@ -40,6 +52,20 @@ Route::resource('cart3', Cart3Controller::class);
 
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 
-Route::get('/get-cart-data', [ShoppingCartController::class, 'getCartData']);
+
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+
+
+require __DIR__.'/auth.php';
 
 

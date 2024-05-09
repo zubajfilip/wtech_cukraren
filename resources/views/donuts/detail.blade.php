@@ -25,35 +25,55 @@
                     <p>{{$product->description}}</p>
                 </div>
                 <div>
-                    <img src="{{ asset('storage/' . $product->imagePath) }}" alt="{{ $product->name }}" class="img-fluid" width="190"
-                        height="150">
+                    <img src="{{ asset('storage/' . $product->imagePath) }}" alt="{{ $product->name }}"
+                        class="img-fluid" width="190" height="150">
                 </div>
                 <div class="price">
                     <p>{{$product->price}}€/ks</p>
                 </div>
-                <div class="row buy-section d-flex justify-content-between">
-                    <div class="col-md-6 col-12 counter d-flex justify-content-center align-items-center">
-                        <button class="btn btn-outline-secondary decrement-button">-</button>
-                        <span class=" me-4 ms-4 " style="font-size: 24px">0</span>
-                        <button class="btn btn-outline-secondary increment-button">+</button>
-                    </div>
-                    <div class="col-md-6 col-12">
-                        <button id="1" type="button" class="btn btn-secondary buy-button text">Pridať do Košíka</button>
-                    </div>
-                    <!-- <button id="product_id" type="button" class="btn btn-secondary">Objednať</button> -->
-                </div>
+                
+                    
+                    <div class="row buy-section d-flex justify-content-center">
+                        @csrf
+                        <div class="col-md-6 col-12 counter d-flex justify-content-center align-items-center">
 
-                <div class="mt-4 mb-4">
-                    <div class="container-fluid details text-center donut-product-outline">
 
-                        <h3 class="text-center">Detaily</h3>
-                        @foreach ($details as $detail)
-                            <p>{{$detail}}</p>
-                        @endforeach
+                            @php
+                            $shoppingCart = $user->shoppingCart;
+                            $cartItem = $shoppingCart ? $shoppingCart->items->where('productId', $product->id)->first()
+                            :
+                            null;
+                            $quantity = $cartItem ? $cartItem->quantity : 0;
+                            @endphp
+
+                            <button type="button" class="btn btn-outline-secondary decrement-button">-</button>
+                            <span class="quantity-value me-4 ms-4" style="font-size: 24px">{{$quantity}}</span>
+                            <button type="button" class="btn btn-outline-secondary increment-button">+</button>
+                        </div>
+                        <div class="col-md-6 col-12">
+                        <form action="{{ route('purchase') }}" method="post">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <input id="quantity" type="hidden" name="quantity" value="{{$quantity}}">
+
+                            <button type="submit" class="btn btn-secondary buy-button text">
+                                Pridať do Košíka
+                            </button>
+                        </form>
                     </div>
-
-                </div>
             </div>
+
+            <div class="mt-4 mb-4">
+                <div class="container-fluid details text-center donut-product-outline">
+
+                    <h3 class="text-center">Detaily</h3>
+                    @foreach ($details as $detail)
+                    <p>{{$detail}}</p>
+                    @endforeach
+                </div>
+
+            </div>
+        </div>
         </div>
 
     </main>
@@ -61,45 +81,20 @@
         <div class="Suggestions text-center">
             <h3>Ostatní tiež objednávajú</h3>
             <!-- pridat sem ostatne produkty -->
-            <div class="row d-flex justify-content-center ">
+            <div class="row d-flex justify-content-center">
+                @foreach ($otherProducts as $otherProduct)
                 <div
                     class="col-md-4 col-sm-6 col-12 d-flex flex-column align-items-center justify-content-end product text-center">
-                    <a href="#">
-                        <img src="./images/choco_sprinkle.jpg" alt="Chocolate sprinkled glazed donut" width="150"
-                            class="img-fluid">
+                    <a href="{{ route('donuts.show', $otherProduct->id) }}">
+                        <img src="{{ asset('storage/' . $otherProduct->imagePath) }}" alt="{{ $otherProduct->name }}"
+                            width="150" class="img-fluid">
                     </a>
                     <div class="name-price">
-                        <p>Čokoládový Posýpaný Donut</p>
-                        <p class="price">0,89€/ks</p>
+                        <p>{{ $otherProduct->name }}</p>
+                        <p class="price">{{ $otherProduct->price }}€/ks</p>
                     </div>
                 </div>
-
-                <div
-                    class="col-md-4 col-sm-6 col-12 d-flex flex-column align-items-center justify-content-end product text-center">
-
-                    <a href="#">
-                        <img src="./images/classic_glazed.jpg" alt="Classic glazed donut" width="150" class="img-fluid">
-                    </a>
-                    <div class="name-price">
-                        <p>Klasický Glazúrový Donut</p>
-                        <p class="price">0,89€/ks</p>
-                    </div>
-                </div>
-
-                <div
-                    class="col-md-4 col-sm-6 col-12 d-flex flex-column align-items-center justify-content-end product text-center">
-
-                    <a href="#">
-                        <img src="./images/classic_sugar.jpg" alt="Classic sugar donut" width="150" class="img-fluid">
-                    </a>
-                    <div class="name-price">
-                        <p>Cukrový Donut</p>
-                        <p class="price">0,89€/ks</p>
-                    </div>
-                </div>
-
-
-
+                @endforeach
             </div>
         </div>
     </div>
@@ -109,9 +104,9 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-    <script src="detail_donuts.js"></script>
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
+    <script src="{{ asset('js/detail_donuts.js') }}"></script>
 </body>
 
 </html>

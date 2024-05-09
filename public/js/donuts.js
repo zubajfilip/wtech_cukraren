@@ -115,6 +115,8 @@ const updateCartOnServer = (buttonId, count) => {
   const url = '/update-cart';
   const data = { buttonId, count };
 
+  console.log("SENDING REQUEST", data)
+
   // Example: Using Fetch API for AJAX request
   fetch(url, {
     method: 'POST',
@@ -123,9 +125,14 @@ const updateCartOnServer = (buttonId, count) => {
     },
     body: JSON.stringify(data)
   })
-  .then(response => {
-    // Handle response
-    console.log('Cart updated successfully');
+  .then(response => response.json()) // Assuming the response is JSON
+  .then(data => {
+    if (data.success) { // Assuming the response includes a success property
+      // Replace window.location with a proper redirection method based on your framework
+      window.location.href = '/cart'; // Redirect to cart view
+    } else {
+      console.error('Error updating cart:', data.message); // Handle errors
+    }
   })
   .catch(error => {
     console.error('Error updating cart:', error);
