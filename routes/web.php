@@ -32,11 +32,7 @@ Route::post('/decrease_product_quantity', [ShoppingCartController::class, 'decre
 
 Route::post('/product_filter', [ProductController::class, 'filter'])->name('product_filter');
 
-
-// Route::post('/remove_item', [ShoppingCartController::class, 'removeItem'])->name('remove_item');
 Route::post('/remove-item/{productId}', [ShoppingCartController::class, 'removeItem'])->name('remove_item');
-
-
 
 Route::resource('donuts', DonutController::class);
 
@@ -66,6 +62,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Admin stuff below
+Route::middleware('auth')->group(function () {
+    Route::post('/add_new_product', [ProductController::class, 'addProduct'])->name('add_new_product');
+    Route::post('/add_product_category', [ProductController::class, 'addProductCategory'])->name('add_product_category');
+});
 
 
 require __DIR__.'/auth.php';

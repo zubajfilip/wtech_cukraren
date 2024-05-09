@@ -53,12 +53,21 @@ class DonutController extends Controller
         $user = Auth::user();
 
 
-        $product = Product::where('id', $id)->first();
-        $details = $product ? json_decode($product->details, true) : null;
+        // $product = Product::where('id', $id)->first();
+        // $details = $product ? json_decode($product->details, true) : null;
+        
+        $product = Product::find($id);
+
+        if ($product) {
+            $categories = $product->categories()->get();
+        } else {
+            $categories = [];
+        }
+
         return view('donuts.detail', [
             'user' => $user,
             'product' => $product,
-            'details' => $details,
+            'categories' => $categories,
             'otherProducts' => $otherProducts,
         ]);
     }
