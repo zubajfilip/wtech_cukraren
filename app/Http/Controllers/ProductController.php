@@ -32,6 +32,65 @@ class ProductController extends Controller
     }
 
 
+    public function filter(Request $request)
+    {
+        // Retrieve form inputs from the request
+        $priceFrom = $request->input('priceFrom');
+        $priceTo = $request->input('priceTo');
+        $sortBy = $request->input('sortBy');
+        $withToppings = $request->filled('withToppings');
+        $withoutToppings = $request->filled('withoutToppings');
+        $stuffed = $request->filled('stuffed');
+        $unstuffed = $request->filled('unstuffed');
+
+        // Query builder for products
+        $query = Product::query();
+
+        // Apply filters based on form inputs
+        if (!empty($priceFrom)) {
+            $query->where('price', '>=', $priceFrom);
+        }
+
+        if (!empty($priceTo)) {
+            $query->where('price', '<=', $priceTo);
+        }
+
+        if ($withToppings) {
+            $query->where('with_toppings', true);
+        }
+
+        if ($withoutToppings) {
+            $query->where('with_toppings', false);
+        }
+
+        if ($stuffed) {
+            $query->where('stuffed', true);
+        }
+
+        if ($unstuffed) {
+            $query->where('stuffed', false);
+        }
+
+        // Apply sorting
+        if ($sortBy === 'Od najlacnejšieho') {
+            $query->orderBy('price', 'asc');
+        } elseif ($sortBy === 'Od najdrahšieho') {
+            $query->orderBy('price', 'desc');
+        }
+
+        dd($query);
+
+        // Retrieve filtered products
+        $filteredProducts = $query->get();
+
+        $user = Auth::user();
+
+        // Return the filtered products to the view
+        return view('filtered-products', compact('filteredProducts'))->with('user');
+    }
+
+
+
     /**
      * Show the form for creating a new resource.
      */

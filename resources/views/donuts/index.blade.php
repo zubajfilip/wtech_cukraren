@@ -29,7 +29,7 @@
             </div>
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent2">
-                    <form>
+                    <form action="{{ route('product_filter') }}" method="post">
                         <div class="form-group">
                             <label for="priceFrom">Cena od (€)</label>
 
