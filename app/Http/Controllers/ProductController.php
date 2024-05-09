@@ -35,8 +35,9 @@ class ProductController extends Controller
 
 
     public function filter(Request $request)
+
     {
-        // Retrieve form inputs from the request
+
         $priceFrom = $request->input('priceFrom');
         $priceTo = $request->input('priceTo');
         $sortBy = $request->input('sortBy');
@@ -46,51 +47,52 @@ class ProductController extends Controller
         $unstuffed = $request->filled('unstuffed');
 
         // Query builder for products
-        $query = Product::query();
+        $filteredProducts = Product::query();
 
-        // Apply filters based on form inputs
         if (!empty($priceFrom)) {
-            $query->where('price', '>=', $priceFrom);
+            $filteredProducts->where('price', '>=', $priceFrom);
         }
 
         if (!empty($priceTo)) {
-            $query->where('price', '<=', $priceTo);
+            $filteredProducts->where('price', '<=', $priceTo);
         }
 
         if ($withToppings) {
-            $query->where('with_toppings', true);
+            $filteredProducts->whereHas('categories', function($query){
+                $query->where('name', 'posýpaný');
+            });
         }
 
         if ($withoutToppings) {
-            $query->where('with_toppings', false);
+            $filteredProducts->whereHas('categories', function($query){
+                $query->where('name', 'neposýpaný');
+            });
         }
 
         if ($stuffed) {
-            $query->where('stuffed', true);
+            $filteredProducts->whereHas('categories', function($query){
+                $query->where('name', 'plnený');
+            });
         }
 
         if ($unstuffed) {
-            $query->where('stuffed', false);
+            $filteredProducts->whereHas('categories', function($query){
+                $query->where('name', 'neplnený');
+            });
         }
 
-        // Apply sorting
         if ($sortBy === 'Od najlacnejšieho') {
-            $query->orderBy('price', 'asc');
+            $filteredProducts->orderBy('price', 'asc');
         } elseif ($sortBy === 'Od najdrahšieho') {
-            $query->orderBy('price', 'desc');
+            $filteredProducts->orderBy('price', 'desc');
         }
-
-        dd($query);
-
-        // Retrieve filtered products
-        $filteredProducts = $query->get();
+        
+        $filteredProducts = $filteredProducts->get();
 
         $user = Auth::user();
 
-        // Return the filtered products to the view
-        return view('filtered-products', compact('filteredProducts'))->with('user');
+        return view('donuts.index')->with('products', $filteredProducts)->with('user', $user);
     }
-
 
 
     /**
