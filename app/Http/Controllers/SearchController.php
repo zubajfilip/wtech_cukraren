@@ -14,8 +14,7 @@ class SearchController extends Controller
         $user = Auth::user();
         $searchTerm = $Request->input('search');
 
-
-
+        DB::statement('CREATE EXTENSION IF NOT EXISTS unaccent');
 
         $sql = "SELECT * 
         FROM products 
