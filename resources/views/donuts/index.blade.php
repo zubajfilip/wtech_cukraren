@@ -28,37 +28,38 @@
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent2">
                     <form action="{{ route('product_filter') }}" method="post">
+                        @csrf
                         <div class="form-group">
                             <label for="priceFrom">Cena od (€)</label>
 
-                            <input type="number" class="form-control" id="priceFrom"
+                            <input type="number" class="form-control" name="priceFrom"
                                 placeholder="Zadajte minimálnu cenu">
                         </div>
                         <div class="form-group">
                             <label for="priceTo">Cena do (€)</label>
-                            <input type="number" class="form-control" id="priceTo" placeholder="Zadajte maximálnu cenu">
+                            <input type="number" class="form-control" name="priceTo" placeholder="Zadajte maximálnu cenu">
                         </div>
                         <div class="form-group">
                             <label for="sortBy">Zoradenie</label>
-                            <select class="form-control" id="sortBy">
-                                <option>Od najlacnejšieho</option>
-                                <option>Od najdrahšieho</option>
+                            <select class="form-control" id="sortBy" name="sortBy">
+                                <option value="Od najlacnejšieho">Od najlacnejšieho</option>
+                                <option value="Od najdrahšieho">Od najdrahšieho</option>
                             </select>
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="withToppings">
+                            <input type="checkbox" class="form-check-input" name="withToppings" value="posýpaný">
                             <label class="form-check-label" for="withToppings">S posypkou</label>
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="withoutToppings">
-                            <label class="form-check-label" for="withToppings">Bez posypkou</label>
+                            <input type="checkbox" class="form-check-input" name="withoutToppings" value="neposýpaný">
+                            <label class="form-check-label" for="withoutToppings">Bez posypkou</label>
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="stuffed">
+                            <input type="checkbox" class="form-check-input" name="stuffed" value="plnený">
                             <label class="form-check-label" for="stuffed">Plnené</label>
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="unstuffed">
+                            <input type="checkbox" class="form-check-input" name="unstuffed" value="neplnený">
                             <label class="form-check-label" for="unstuffed">Neplnené</label>
                         </div>
                         <button type="submit" class="btn btn-primary">Filtrovať</button>
@@ -80,7 +81,7 @@
 
                     @php
                         $shoppingCart = $user->shoppingCart;
-                        $cartItem = $shoppingCart ? $shoppingCart->items->where('productId', $product->id)->first()->quantity : null;
+                        $cartItem = $shoppingCart ? $shoppingCart->items->where('productId', $product->id)->first() : null;
                         $quantity = $cartItem ? $cartItem->quantity : 0;
                     @endphp
 
