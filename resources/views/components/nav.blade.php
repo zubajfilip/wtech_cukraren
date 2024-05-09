@@ -2,11 +2,11 @@
     <nav class="navbar navbar-expand-md">
         <div class="container-fluid">
 
-            <a class="navbar-brand" href="/home"><img class="img-fluid"
+            <a class="navbar-brand" href="{{ url('/home') }}"><img class="img-fluid"
                     src="../storage/images/logo.png" width="140" height="100"></a>
             <div class="d-flex">
 
-                <a href="/cart1" class="nav-link ms-2 md-text hidden-md-up">🛒</a>
+                <a href="{{ url('/cart1') }}" class="nav-link ms-2 md-text hidden-md-up">🛒</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -20,18 +20,26 @@
                 <input class="form-control me-2" type="search" name="search" placeholder="Search">
                 <button class="btn btn-outline-success me-2" type="submit">Search</button>
             </form>
+                @if(isset($user->email))
+                    <a href="{{ url('/profile') }}"><p>{{ $user->email }}</p></a>
+                @else
+                    <a href="{{ url('/login') }}"> <button class="btn btn-primary">Login</button></a>
+                @endif
+                
 
-                <a href="/login"> <button class="btn btn-primary">Login</button></a>
-
-                <a href="cart1" class="nav-link ms-2 md-text">🛒</a>
+                <a href="{{ url('/cart1') }}" class="nav-link ms-2 md-text">🛒</a>
 
             </div>
         </div>
     </nav>
 
     <div class="container-fluid collapse navbar-collapse hidden-md-up" id="navbarSupportedContent">
+            @if(isset($user->email))
+                <a href="{{ url('/profile') }}"><p>{{ $user->email }}</p></a>
+            @else
+                <a href="{{ url('/login') }}"><button class="col-12 btn btn-primary mb-2 justify-content-center">Login</button></a>
+            @endif
         
-        <a href="/login"><button class="col-12 btn btn-primary mb-2 justify-content-center">Login</button></a>
         
         <form class="col d-flex" action="{{ route('search') }}" method="GET">
             <input class="form-control me-2 mb-2" type="search" name="search" placeholder="Search">

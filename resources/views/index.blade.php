@@ -6,7 +6,8 @@
 </head>
 
 <body>
-    @include('components.nav')
+
+    @include('components.nav', ['user' => $user])
 
     <div class="container-fluid products">
         <div class="product-category">

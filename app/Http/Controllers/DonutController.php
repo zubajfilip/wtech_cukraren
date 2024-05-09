@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class DonutController extends Controller
 {
@@ -14,7 +16,15 @@ class DonutController extends Controller
     public function index()
     {
         $products = Product::where('type', 'Donut')->get();
-        return view('donuts.index')->with('products', $products);
+        
+        $user = Auth::user();
+
+        // Assuming your user model has an 'email' attribute
+        
+        return view('donuts.index', [
+            'user' => $user,
+            'products' => $products,    
+        ]);
     }
 
     /**
@@ -38,11 +48,18 @@ class DonutController extends Controller
      */
     public function show(string $id)
     {
+        $otherProducts = DB::table('products')->inRandomOrder()->limit(3)->get();
+
+        $user = Auth::user();
+
+
         $product = Product::where('id', $id)->first();
         $details = $product ? json_decode($product->details, true) : null;
         return view('donuts.detail', [
+            'user' => $user,
             'product' => $product,
             'details' => $details,
+            'otherProducts' => $otherProducts,
         ]);
     }
 

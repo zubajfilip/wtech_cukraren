@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -13,8 +14,23 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('index');
+        // Check if a user is logged in
+        if (Auth::check()) {
+            // Fetch the currently logged-in user
+            $user = Auth::user();
+
+            // Pass the user's email and ID to the view
+            return view('index', [
+                'user' => $user
+            ]);
+        }
+
+        // If no user is logged in, pass null values to the view
+        return view('index', [
+            'user' => null,
+        ]);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -38,21 +54,6 @@ class ProductController extends Controller
     public function show(Product $request)
     {
         //
-    }
-
-    /**
-     * Handle search request.
-     */
-    public function search(Product $request)
-    {
-        // Get the search query from the request
-        $searchQuery = $request->input('search');
-
-        // Perform the search in the products table
-        $products = Product::where('name', 'like', "%$searchQuery%")->get();
-
-        // Pass the search results to the view
-        return view('search-results', ['products' => $products, 'searchQuery' => $searchQuery]);
     }
 
     /**

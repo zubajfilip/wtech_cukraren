@@ -18,11 +18,9 @@ return new class extends Migration
             $table->string('postalCode', 20);
             $table->string('country', 100);
             $table->string('customerEmail', 255);
-            $table->uuid('userId')->nullable();
             $table->timestamps();
 
             $table->foreign('customerEmail')->references('email')->on('customers');
-            $table->foreign('userId')->references('id')->on('users');
         });
     }
 
@@ -33,7 +31,6 @@ return new class extends Migration
     {
         Schema::table('addresses', function (Blueprint $table) {
             $table->dropForeign('addresses_customeremail_foreign');
-            $table->dropForeign('addresses_userid_foreign');
         });
         Schema::dropIfExists('addresses');
     }
