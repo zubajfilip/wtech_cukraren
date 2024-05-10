@@ -13,12 +13,22 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+    
+        <style>
+            .image-size {
+                max-width: 175px;  /* Set max width */
+                display: block;     /* Make the image behave like a block element for centering */
+                margin: 0 auto;    /* Center horizontally */
+            }
+        </style>
+    
     </head>
     <body class="font-sans text-gray-900 antialiased">
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
             <div>
                 <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                <!--    <x-application-logo class="logo w-20 h-20 fill-current text-gray-500 cupcake-icon" /> -->
+                <img class = "image-size" src="../storage/images/logo.png" alt="Cukráreň logo">
                 </a>
             </div>
 
