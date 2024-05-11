@@ -240,5 +240,10 @@ h2.row {
     width: 50%;
 }
 
-
-
+h2 {
+    font-family: 'Prociono', 'Times New Roman', serif; /* Fallback to any serif font */
+  }
+  
+p {
+    font-family: 'Playfair Display', 'Times New Roman', serif; 
+}
