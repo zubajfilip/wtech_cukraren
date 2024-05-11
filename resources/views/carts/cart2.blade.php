@@ -139,12 +139,12 @@
 
                             <div class="col-12 d-flex selected-delivery mt-2">
                                 <span class="col-4">Doprava</span>
-                                <span class="col-8 text-end price-delivery"> 🚚Kurier +1,30€ </span>
+                                <span class="col-8 text-end price-delivery"></span>
                             </div>
 
                             <div class="col-12 d-flex selected-payment last-product mt-2 mb">
                                 <span class="col-4">Platba</span>
-                                <span class="col-8 text-end price-payment">💳Platobná Karta +0,00€</span>
+                                <span class="col-8 text-end price-payment"></span>
                             </div>
                         </div>
 
@@ -174,7 +174,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-    <script src="cart2_controller.js"></script>
+    <script src="{{ asset('js/cart2_controller.js') }}"></script>
 </body>
 
 </html>

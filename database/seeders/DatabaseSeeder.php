@@ -234,19 +234,19 @@ class DatabaseSeeder extends Seeder
         //['applePay', 'creditCard', 'cashOnDelivery']
         Payment::create([
             'id' => Str::uuid(),
-            'name' => 'applePay',
+            'name' => '🍎Apple pay',
             'price' => 0,
         ]);
 
         Payment::create([
             'id' => Str::uuid(),
-            'name' => 'creditCard',
+            'name' => '💳Platobná Karta',
             'price' => 0,
         ]);
 
         Payment::create([
             'id' => Str::uuid(),
-            'name' => 'cashOnDelivery',
+            'name' => '💰Na dobierku',
             'price' => 1,
         ]);
 
@@ -254,13 +254,13 @@ class DatabaseSeeder extends Seeder
         //['personalDelivery', 'courier']
         Delivery::create([
             'id' => Str::uuid(),
-            'name' => 'personalDelivery',
+            'name' => '🚶Osobný Odber',
             'price' => 0,
         ]);
 
         Delivery::create([
             'id' => Str::uuid(),
-            'name' => 'courier',
+            'name' => '🚚Kurier',
             'price' => 5.0,
         ]);
 
