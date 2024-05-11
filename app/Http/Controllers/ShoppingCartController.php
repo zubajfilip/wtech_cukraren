@@ -217,8 +217,11 @@ class ShoppingCartController extends Controller
     public function removeItem(string $productId)
     {
         if(Auth::check()){
-            DB::delete('DELETE FROM "cartItems" WHERE "productId" = ?', [$productId]);
             $user = Auth::user();
+            $shoppingCartId = $user->shoppingCart->id;
+
+            DB::delete('DELETE FROM "cartItems" WHERE "productId" = ? AND "shoppingCartId" = ?', [$productId, $shoppingCartId]);
+
         } else {
             $cartItems = session()->get('cartItems', []);
             unset($cartItems[$productId]);
@@ -241,24 +244,27 @@ class ShoppingCartController extends Controller
             // Retrieve the shopping cart for the authenticated user
             $shoppingCart = $user->shoppingCart;
 
+            
+
             // dd($shoppingCart->items()->get());
 
-            if ($shoppingCart) {
-                // Retrieve the cart items with products
-                // $cartItems = $shoppingCart->items()->with('product')->get();
+            if (!$shoppingCart) {
 
-                $cartItemsProducts = DB::select('
-                    SELECT "cartItems".*, products.*
-                    FROM "cartItems"
-                    JOIN products ON "cartItems"."productId" = products.id
-                    WHERE "cartItems"."shoppingCartId" = ?
-                ', [$shoppingCart->id]);
-
-
-                // dd($cartItemsProducts);
-
+                // If the user doesn't have a shopping cart yet, create a new one
+                $shoppingCart = new ShoppingCart();
+                $shoppingCart->id = Str::uuid();
+                $shoppingCart->userId = $user->id;
+                $shoppingCart->save();
             }
-        }else {
+
+            $cartItemsProducts = DB::select('
+                SELECT "cartItems".*, products.*
+                FROM "cartItems"
+                JOIN products ON "cartItems"."productId" = products.id
+                WHERE "cartItems"."shoppingCartId" = ?
+            ', [$shoppingCart->id]);
+            
+        } else {
             $cartItems = session()->get('cartItems', []);
 
             // Fetch product details for each cart item
@@ -268,14 +274,13 @@ class ShoppingCartController extends Controller
                 $product = Product::find($productId);
                 
                 if ($product) {
-                    // Format product data as needed
+
                     $cartItemsProducts[] = (object) [
                         'productId' => $productId,
                         'quantity' => $quantity,
                         'name' => $product->name,
                         'price' => $product->price,
                         'imagePath' => $product->imagePath,
-                        // Add other product attributes as needed
                     ];
                 }
             }

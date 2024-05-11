@@ -7,7 +7,15 @@
 
 <body>
     @include('components.nav')
+    @if(empty($cartItemsProducts))
 
+    <div class="container-fluid d-flex mb-4 justify-content-center">
+        <div class="col-6 text-center">
+            <h1>WOOP WOOP KOSIK JE PRAZDNY</h1>
+            <a href="/"><button type="button" class="btn btn-secondary">Späť nakupovať</button></a>
+        </div>
+    </div>
+    @else
     <div class="container-fluid shipping-phase d-flex col-12 mt-4">
         <div class="row">
             <div class="col-12 col-sm-auto cart d-flex align-items-center me-4 hidden-md-down">
@@ -36,51 +44,58 @@
 
 
     <!-- TODO: ZMENIT ACTION NA ENDPOINT KTORY VRATI PAGE  -->
-    <form action="./cart_3.html" method="post">
+    <form action="{{ route('cart3') }}" method="post">
+        @csrf
         <main class="container-fluid mb-4 mt-4">
             <div class="main-section">
                 <div class="row main-indent mt-4">
                     <div class="col-sm-12 col-md-6 col-lg-6  delivery-pay-selection mb-4">
                         <div class="delivery-options">
                             <p><b>Doprava</b></p>
+                            @foreach($deliveries as $delivery)
                             <div class="row justify-content-between">
                                 <div class="col-9">
-                                    <input type="radio" id="osobny" value="Osobny_Odber" name="delivery" disabled>
-                                    <label for="osobny">🚶Osobný Odber</label>
+                                    <input type="radio" id="{{$delivery->id}}" value="{{$delivery->id}}" name="delivery" required>
+                                    <label for="{{$delivery->id}}">{{$delivery->name}}</label>
                                 </div>
 
                                 <div class="col-3 priplatok text-end">
-                                    <p>+0,00</p>
+                                    <p>+{{$delivery->price}}€</p>
                                 </div>
                             </div>
-                            <div>
+                            @endforeach
+
+                            
+
+                            <!-- <div>
                                 <div class="row justify-content-between">
                                     <div class="col-9">
-                                        <input type="radio" id="kurier" value="Kurier" name="delivery" checked>
+                                        <input type="radio" id="kurier" value="courier" name="delivery">
                                         <label for="kurier">🚚Kurier</label>
                                     </div>
                                     <div class="col-3 priplatok text-end">
                                         <p>+1,30</p>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="payment-options">
                             <p><b>Platba</b></p>
+                            @foreach($payments as $payment)
                             <div class="row justify-content-between">
                                 <div class="col-9">
-                                    <input type="radio" id="apple" value="apple_pay" name="payment" disabled>
-                                    <label for="apple">🍎Apple pay</label>
+                                    <input type="radio" id="{{$payment->id}}" value="{{$payment->id}}" name="payment" required>
+                                    <label for="{{$payment->id}}">{{$payment->name}}</label>
                                 </div>
-
                                 <div class="col-3 priplatok text-end">
-                                    <p>+0,00</p>
+                                    <p>+{{$payment->price}}€</p>
                                 </div>
                             </div>
-                            <div>
+                            @endforeach
+                            <!-- <div>
                                 <div class="row justify-content-between">
                                     <div class="col-9">
-                                        <input type="radio" id="karta" value="debet_card" name="payment" checked>
+                                        <input type="radio" id="karta" value="creditCard" name="payment">
                                         <label for="karta">💳Platobná Karta</label>
                                     </div>
                                     <div class="col-3 priplatok text-end">
@@ -88,21 +103,37 @@
                                     </div>
                                 </div>
                             </div>
+                            <div>
+                                <div class="row justify-content-between">
+                                    <div class="col-9">
+                                        <input type="radio" id="dobierka" value="cashOnDelivery" name="payment">
+                                        <label for="dobierka">💰Na Dobierku</label>
+                                    </div>
+                                    <div class="col-3 priplatok text-end">
+                                        <p>+0,00</p>
+                                    </div>
+                                </div>
+                            </div> -->
                         </div>
                     </div>
 
                     <div class="col-sm-12 col-md-6 col-lg-6 shipping-cart-products">
+                        @foreach($cartItemsProducts as $cartItemProduct)
                         <div class="mb-1 d-flex justify-content-between align-items-center product-donut-choco_glaze">
-                            <img src="./images/classic_sugar.jpg" alt="Classic sugar donut" width="67">
-                            <span class="hidden-md-up">Cukrový Donut</span>
-                            <span class="ms-1 piece-price text-end">5 ks / 4,45€</span>
+                            <img src="{{ asset('storage/' . $cartItemProduct->imagePath) }}" alt="{{ $cartItemProduct->name }}" width="67">
+                            <span class="hidden-md-up">{{$cartItemProduct->name}}</span>
+                            @php
+                            $productPrice = $cartItemProduct->price * $cartItemProduct->quantity;
+                            @endphp
+                            <span class="ms-1 piece-price text-end">{{$cartItemProduct->quantity}} ks / {{ number_format($productPrice, 2) }}€</span>
                         </div>
-                        <div
+                        @endforeach
+                        <!-- <div
                             class="mb-1 last-product d-flex justify-content-between align-items-center product-donut-choco_glaze">
                             <img src="./images/choco_glaze.jpg" alt="Choco glazed donut" width="80">
                             <span class="hidden-md-up">Čokoládový Donut</span>
                             <span class="ms-1 piece-price text-end">1 ks / 0,89€</span>
-                        </div>
+                        </div> -->
 
                         <div class="selected-options">
 
@@ -135,6 +166,7 @@
             </div>
         </div>
     </form>
+    @endif
 
 
     @include('components.footer')

@@ -11,18 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
+
+        // DB::unprepared("CREATE TYPE paymentMethodType AS ENUM ('applePay', 'creditCard', 'cashOnDelivery');");
+
         Schema::create('orders', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->dateTime('orderDate');
-            $table->enum('orderStatus', ['pending', 'canceled', 'completed']);
+            $table->foreignUuid('orderStatusId')->references('id')->on('orderStatuses');// ['pending', 'canceled', 'completed']);
             $table->string('customerEmail', 255);
             $table->string('customerPhoneNumber', 13)->nullable();
-            $table->enum('paymentMethod', ['applePay', 'creditCard', 'cashOnDelivery']);
-            $table->enum('deliveryMethod', ['personalDelivery', 'courier']);
+            // $table->addColumn('paymentMethod', 'paymentMethodType');
+            $table->foreignUuid('paymentMethod')->references('id')->on('payments');
+            $table->foreignUuid('deliveryMethod')->references('id')->on('deliveries'); //['personalDelivery', 'courier']);
             $table->foreignUuid('deliveryAddressId')->references('id')->on('addresses');
+            $table->decimal('price', 10, 2);
             $table->timestamps();
-
             
+            // $table->foreign('deliveryMethod')->references('name')->on('deliveries'); //['personalDelivery', 'courier']);
+            // $table->foreign('paymentMethod')->references('name')->on('payments');//['applePay', 'creditCard', 'cashOnDelivery']);
         });
     }
 
@@ -33,6 +38,9 @@ return new class extends Migration
     {
         Schema::table('orders', function (Blueprint $table) {
             $table->dropForeign('orders_deliveryaddressid_foreign');
+            $table->dropForeign('orders_deliverymethod_foreign');
+            $table->dropForeign('orders_paymentmethod_foreign');
+            $table->dropForeign('orders_orderstatusid_foreign');
         });
         Schema::dropIfExists('orders');
     }

@@ -12,7 +12,7 @@
     <div class="container-fluid d-flex mb-4 justify-content-center">
         <div class="col-6 text-center">
             <h1>WOOP WOOP KOSIK JE PRAZDNY</h1>
-            <a href="/home"><button type="button" class="btn btn-secondary">Späť nakupovať</button></a>
+            <a href="/"><button type="button" class="btn btn-secondary">Späť nakupovať</button></a>
         </div>
     </div>
     @else
@@ -56,7 +56,7 @@
                 <div class="row product-donut-choco_glaze d-flex align-items-center">
                     <div class="product-name-img col-lg-4 col-md-4 col-sm-3 d-flex align-items-center">
                         <img class="img-fluid" src="{{ asset('storage/' . $cartItemProduct->imagePath) }}"
-                            alt="Choco glazed donut" width="90">
+                            alt="{{ $cartItemProduct->name }}" width="90">
                         <div><b>{{ $cartItemProduct->name }}</b></div>
                     </div>
 
@@ -188,7 +188,7 @@
             <a href="/home"><button type="button" class="btn btn-secondary">Spät</button></a>
         </div>
         <div class="col-6 d-flex justify-content-end">
-            <a href="/cart2"><button type="button" class="btn btn-success">Pokračovať</button></a>
+            <a href="{{ url('/cart2') }}"><button type="button" class="btn btn-success">Pokračovať</button></a>
         </div>
     </div>
     @endif

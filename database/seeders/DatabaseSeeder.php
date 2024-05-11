@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Product;
 use App\Models\Admin;
+use App\Models\Payment;
+use App\Models\Delivery;
+use App\Models\OrderStatus;
 use App\Models\Category;
 use App\Models\Type;
 use App\Models\CategoryProduct;
@@ -225,6 +228,59 @@ class DatabaseSeeder extends Seeder
 
         Type::create([
             'name' => 'Cake',
+        ]);
+
+        // payments seeder
+        //['applePay', 'creditCard', 'cashOnDelivery']
+        Payment::create([
+            'id' => Str::uuid(),
+            'name' => 'applePay',
+            'price' => 0,
+        ]);
+
+        Payment::create([
+            'id' => Str::uuid(),
+            'name' => 'creditCard',
+            'price' => 0,
+        ]);
+
+        Payment::create([
+            'id' => Str::uuid(),
+            'name' => 'cashOnDelivery',
+            'price' => 1,
+        ]);
+
+        // delivery seeder
+        //['personalDelivery', 'courier']
+        Delivery::create([
+            'id' => Str::uuid(),
+            'name' => 'personalDelivery',
+            'price' => 0,
+        ]);
+
+        Delivery::create([
+            'id' => Str::uuid(),
+            'name' => 'courier',
+            'price' => 5.0,
+        ]);
+
+
+        // orderstatus seeder
+        //['pending', 'canceled', 'completed']
+
+        OrderStatus::create([
+            'id' => Str::uuid(),
+            'name' => 'pending'
+        ]);
+
+        OrderStatus::create([
+            'id' => Str::uuid(),
+            'name' => 'canceled'
+        ]);
+
+        OrderStatus::create([
+            'id' => Str::uuid(),
+            'name' => 'completed'
         ]);
     }
 }

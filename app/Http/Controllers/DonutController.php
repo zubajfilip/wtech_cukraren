@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\ShoppingCart;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -25,16 +26,15 @@ class DonutController extends Controller
         if ($user) {
             // User is logged in, fetch their shopping cart
             $shoppingCart = $user->shoppingCart;
+            if (!$shoppingCart) {
+                // If the user doesn't have a shopping cart yet, create a new one
+                $shoppingCart = new ShoppingCart();
+                $shoppingCart->id = Str::uuid();
+                $shoppingCart->userId = $user->id;
+                $shoppingCart->save();
+            }
         } else {
             $shoppingCart = session()->get('cartItems', []);
-            // User is not logged in, create a shopping cart in session storage
-            // Check if a shopping cart already exists in session
-            // if (!Session::has('cartItems')) {
-            //     // If no shopping cart exists, create a new one
-            //     Session::put('cartItems', []);
-            // }
-            // // Retrieve the shopping cart from session
-            // $shoppingCart = Session::get('cartItems');
         }
 
         // dd($shoppingCart);
@@ -78,7 +78,19 @@ class DonutController extends Controller
 
         $user = Auth::user();
 
-
+        if ($user) {
+            // User is logged in, fetch their shopping cart
+            $shoppingCart = $user->shoppingCart;
+            if (!$shoppingCart) {
+                // If the user doesn't have a shopping cart yet, create a new one
+                $shoppingCart = new ShoppingCart();
+                $shoppingCart->id = Str::uuid();
+                $shoppingCart->userId = $user->id;
+                $shoppingCart->save();
+            }
+        } else {
+            $shoppingCart = session()->get('cartItems', []);
+        }
         // $product = Product::where('id', $id)->first();
         // $details = $product ? json_decode($product->details, true) : null;
         
@@ -95,6 +107,7 @@ class DonutController extends Controller
             'product' => $product,
             'categories' => $categories,
             'otherProducts' => $otherProducts,
+            'shoppingCart' => $shoppingCart,
         ]);
     }
 

@@ -5,18 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Address extends Model
+class Payment extends Model
 {
     use HasFactory;
-
+    
     protected $fillable = [
         'id',
-        'street',
-        'city',
-        'postalCode',
-        'country',
-        'customerEmail',
-        'userId',
+        'name',
+        'price',
     ];
 
     public function getIdAttribute()

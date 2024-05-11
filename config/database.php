@@ -18,6 +18,12 @@ return [
 
     'default' => env('DB_CONNECTION', 'pgsql'),
 
+    'dbal' => [
+        'types' => [
+            'tableTypeEnum' => \App\Models\Types\AdStatusType::class,
+        ],
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Database Connections

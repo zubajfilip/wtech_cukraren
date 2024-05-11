@@ -39,11 +39,15 @@
 
 
                         @php
-                        $shoppingCart = $user->shoppingCart;
-                        $cartItem = $shoppingCart ? $shoppingCart->items->where('productId', $product->id)->first()
-                        :
-                        null;
-                        $quantity = $cartItem ? $cartItem->quantity : 0;
+                            if (isset($user)) {
+                            // User is authenticated, access items directly
+                            $cartItem = $shoppingCart->items->firstWhere('productId', $product->id);
+                            $quantity = $cartItem ? $cartItem->quantity : 0;
+                            } else{
+                            // User is not authenticated
+                            $cartItems = session()->get('cartItems', []);
+                            $quantity = isset($cartItems[$product->id]) ? $cartItems[$product->id] : 0;
+                        }
                         @endphp
 
                         <button type="button" class="btn btn-outline-secondary decrement-button">-</button>
