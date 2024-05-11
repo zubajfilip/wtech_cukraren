@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class DonutController extends Controller
 {
@@ -21,11 +22,35 @@ class DonutController extends Controller
         
         $user = Auth::user();
         
+        if ($user) {
+            // User is logged in, fetch their shopping cart
+            $shoppingCart = $user->shoppingCart;
+        } else {
+            $shoppingCart = session()->get('cartItems', []);
+            // User is not logged in, create a shopping cart in session storage
+            // Check if a shopping cart already exists in session
+            // if (!Session::has('cartItems')) {
+            //     // If no shopping cart exists, create a new one
+            //     Session::put('cartItems', []);
+            // }
+            // // Retrieve the shopping cart from session
+            // $shoppingCart = Session::get('cartItems');
+        }
+
+        // dd($shoppingCart);
+
         return view('donuts.index', [
             'user' => $user,
             'products' => $products,
-            'categories' => $categories, 
+            'categories' => $categories,
+            'shoppingCart' => $shoppingCart,
         ]);
+
+        // return view('donuts.index', [
+        //     'user' => $user,
+        //     'products' => $products,
+        //     'categories' => $categories, 
+        // ]);
     }
 
     /**

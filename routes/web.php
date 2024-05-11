@@ -21,9 +21,9 @@ use App\Http\Middleware\AdminAccessMiddleware;
 
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::resource('users', UserController::class);
 
@@ -34,7 +34,7 @@ Route::resource('users', UserController::class);
 
 
 
-Route::resource('home', ProductController::class);
+Route::resource('/', ProductController::class);
 
 Route::post('/purchase', [ShoppingCartController::class, 'purchase'])->name('purchase');
 

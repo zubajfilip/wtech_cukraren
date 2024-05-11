@@ -135,7 +135,11 @@
                         </b>
                     </span>
                     <div class="col-2 d-flex justify-content-end">
-                        <button type="button" class="btn btn-danger fluid" id="delete-product"><b>X</b></button>
+                        <form action="{{ route('remove_item', ['productId' => $cartItemProduct->productId]) }}"
+                            method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-danger fluid" id="delete-product"><b>X</b></button>
+                        </form>
                     </div>
                 </div>
             </div>
