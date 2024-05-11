@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-md">
         <div class="container-fluid">
 
-            <a class="navbar-brand" href="{{ url('/home') }}"><img class="img-fluid"
+            <a class="navbar-brand" href="{{ url('/') }}"><img class="img-fluid"
                     src="../storage/images/logo.png" width="140" height="100"></a>
             <div class="d-flex">
 
