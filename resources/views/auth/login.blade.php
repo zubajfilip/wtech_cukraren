@@ -39,7 +39,7 @@
                 </a>
             @endif
 
-            <x-primary-button class="ms-3">
+            <x-primary-button class="log-reg-button ms-3 hover:bg-white hover:text-black">
                 {{ __('Prihlásiť sa') }}
             </x-primary-button>
         </div>

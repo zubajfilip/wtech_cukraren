@@ -44,7 +44,7 @@
                 {{ __('Už mám vytvorený účet') }}
             </a>
 
-            <x-primary-button class="ms-4">
+            <x-primary-button class="log-reg-button ms-4 hover:bg-white hover:text-black">
                 {{ __('Vytvoriť účet') }}
             </x-primary-button>
         </div>
