@@ -12,8 +12,13 @@ use App\Http\Controllers\Cart2Controller;
 use App\Http\Controllers\Cart3Controller;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ShoppingCartController;
+use App\Http\Controllers\AdminController;
 use App\Http\Middleware\LoadCartData;
 use App\Http\Controllers\Auth;
+use App\Http\Middleware\AdminAccessMiddleware;
+
+// Route::post('/purchase', [ShoppingCartController::class, 'purchase'])->name('purchase')->middleware(PurchaseAccessMiddleware::class);
+
 
 
 Route::get('/', function () {
@@ -21,6 +26,13 @@ Route::get('/', function () {
 });
 
 Route::resource('users', UserController::class);
+
+// Route::resource('admins', AdminController::class);
+
+// Route::get('searchadmin', [AdminController::class, 'search'])->name('searchadmin');
+
+
+
 
 Route::resource('home', ProductController::class);
 
@@ -30,11 +42,14 @@ Route::post('/increase_product_quantity', [ShoppingCartController::class, 'incre
 
 Route::post('/decrease_product_quantity', [ShoppingCartController::class, 'decreaseProductQuantity'])->name('decrease_product_quantity');
 
-Route::post('/product_filter', [ProductController::class, 'filter'])->name('product_filter');
+Route::get('/product_filter', [ProductController::class, 'filter'])->name('product_filter');
 
 Route::post('/remove-item/{productId}', [ShoppingCartController::class, 'removeItem'])->name('remove_item');
 
 Route::resource('donuts', DonutController::class);
+
+// Route::get('/donuts', [DonutController::class, 'index'])->name('donuts.index');
+
 
 Route::resource('login', LoginController::class);
 
@@ -62,11 +77,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Admin stuff below
-Route::middleware('auth')->group(function () {
-    Route::post('/add_new_product', [ProductController::class, 'addProduct'])->name('add_new_product');
-    Route::post('/add_product_category', [ProductController::class, 'addProductCategory'])->name('add_product_category');
+Route::middleware([AdminAccessMiddleware::class])->group(function () {
+    Route::resource('admins', AdminController::class);
+    Route::get('searchadmin', [AdminController::class, 'search'])->name('searchadmin');
 });
+
+// Admin stuff below
+// Route::middleware('auth')->group(function () {
+//     Route::post('/add_new_product', [ProductController::class, 'addProduct'])->name('add_new_product');
+//     Route::post('/add_product_category', [ProductController::class, 'addProductCategory'])->name('add_product_category');
+// });
 
 
 require __DIR__.'/auth.php';

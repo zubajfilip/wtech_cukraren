@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,21 +17,14 @@ class DonutController extends Controller
     public function index()
     {
         $products = Product::where('type', 'Donut')->get();
+        $categories = Category::all();
         
         $user = Auth::user();
-
-        // if(!$user){
-            // $user-> 
-            // dd($user);
-        // }
-
-        // dd($user->shoppingCart);
-
-        // Assuming your user model has an 'email' attribute
         
         return view('donuts.index', [
             'user' => $user,
-            'products' => $products,    
+            'products' => $products,
+            'categories' => $categories, 
         ]);
     }
 

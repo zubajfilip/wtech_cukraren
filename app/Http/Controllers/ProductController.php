@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Category;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -16,18 +19,14 @@ class ProductController extends Controller
      */
     public function index()
     {
-        // Check if a user is logged in
         if (Auth::check()) {
-            // Fetch the currently logged-in user
             $user = Auth::user();
 
-            // Pass the user's email and ID to the view
             return view('index', [
                 'user' => $user
             ]);
         }
 
-        // If no user is logged in, pass null values to the view
         return view('index', [
             'user' => null,
         ]);
@@ -35,18 +34,23 @@ class ProductController extends Controller
 
 
     public function filter(Request $request)
-
     {
+
+        $categories = Category::pluck('id')->toArray(); 
+        
+        // dd($request);
+        $request->validate([
+            'priceFrom' => 'nullable|numeric|min:0',
+            'priceTo' => 'nullable|numeric|min:0',
+            'sortBy' => 'nullable|string|in:Od najlacnejšieho,Od najdrahšieho',
+            'categories.*' => 'nullable|string',
+            'categories' => ['array','nullable', Rule::in($categories)],
+        ]);
 
         $priceFrom = $request->input('priceFrom');
         $priceTo = $request->input('priceTo');
         $sortBy = $request->input('sortBy');
-        $withToppings = $request->filled('withToppings');
-        $withoutToppings = $request->filled('withoutToppings');
-        $stuffed = $request->filled('stuffed');
-        $unstuffed = $request->filled('unstuffed');
 
-        // Query builder for products
         $filteredProducts = Product::query();
 
         if (!empty($priceFrom)) {
@@ -57,29 +61,15 @@ class ProductController extends Controller
             $filteredProducts->where('price', '<=', $priceTo);
         }
 
-        if ($withToppings) {
-            $filteredProducts->whereHas('categories', function($query){
-                $query->where('name', 'posýpaný');
-            });
-        }
+        
 
-        if ($withoutToppings) {
-            $filteredProducts->whereHas('categories', function($query){
-                $query->where('name', 'neposýpaný');
+        foreach ($request->categories as $categoryId) {
+            $filteredProducts->whereHas('categories', function($query) use ($categoryId) {
+                $query->where('categories.id', $categoryId);
             });
         }
-
-        if ($stuffed) {
-            $filteredProducts->whereHas('categories', function($query){
-                $query->where('name', 'plnený');
-            });
-        }
-
-        if ($unstuffed) {
-            $filteredProducts->whereHas('categories', function($query){
-                $query->where('name', 'neplnený');
-            });
-        }
+        
+        
 
         if ($sortBy === 'Od najlacnejšieho') {
             $filteredProducts->orderBy('price', 'asc');
@@ -87,11 +77,18 @@ class ProductController extends Controller
             $filteredProducts->orderBy('price', 'desc');
         }
         
-        $filteredProducts = $filteredProducts->get();
+        $products = $filteredProducts->get();
 
         $user = Auth::user();
+        $categoriesAll = Category::all();
 
-        return view('donuts.index')->with('products', $filteredProducts)->with('user', $user);
+        // return view('search-results', compact('products'))->with('user', $user)->with('categories', $categoriesAll);
+        return view('donuts.index', [
+            'user' => $user,
+            'products' => $products,
+            'categories' => $categoriesAll,
+            'categoriesChecked' => $request->categories,
+        ]);
     }
 
 

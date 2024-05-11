@@ -42,12 +42,14 @@ class ShoppingCartController extends Controller
         if (Auth::check()) {
             $user = Auth::user();
 
+            
+
 
             // qunatity field is not filled the buy button was pressed
             if (!$request->filled('quantity')){
                 $request->quantity = 1;
             }
-    
+
             // Check if the user already has a shopping cart
             $shoppingCart = $user->shoppingCart;
     
@@ -72,6 +74,8 @@ class ShoppingCartController extends Controller
     
             // Update cart item (logic remains the same)
             $cartItem = $shoppingCart->items()->where('productId', $request->product_id)->first();
+
+            // dd($cartItem);
 
             // Create a new cart item and associate it with the shopping cart if it doesnt exist
             if(!$cartItem){

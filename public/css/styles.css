@@ -224,7 +224,15 @@ h2.row {
     /* padding: 20px; */
 }
 
+.header-info {
+    border: 1px solid black;
+    margin-bottom: 1px;
+}
 
+
+.odd {
+    background-color: rgb(250, 118, 118);
+}
 
 
 
