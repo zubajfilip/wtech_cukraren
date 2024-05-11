@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\ShoppingCart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 
 class ShoppingCartController extends Controller
@@ -16,45 +17,47 @@ class ShoppingCartController extends Controller
 
     
 
-    public function getCartData()
-    {
-        // Check if user is authenticated
-        if (Auth::check()) {
-            $user = Auth::user();
-            // Retrieve cart items from the database
-            $cartItems = CartItem::join('shoppingCarts', 'cartItems.shoppingCartId', '=', 'shoppingCarts.id')
-                ->join('products', 'cartItems.productId', '=', 'products.id')
-                ->where('shoppingCarts.userId', '=', $user->id)
-                ->select('cartItems.*', 'products.*')
-                ->get();
-        } else {
-            // Retrieve cart items from session storage or elsewhere
-            // $cartItems = // Retrieve cart items from session storage or elsewhere
-        }
+    // public function getCartData()
+    // {
+    //     // Check if user is authenticated
+    //     if (Auth::check()) {
+    //         $user = Auth::user();
+    //         // Retrieve cart items from the database
+    //         $cartItems = CartItem::join('shoppingCarts', 'cartItems.shoppingCartId', '=', 'shoppingCarts.id')
+    //             ->join('products', 'cartItems.productId', '=', 'products.id')
+    //             ->where('shoppingCarts.userId', '=', $user->id)
+    //             ->select('cartItems.*', 'products.*')
+    //             ->get();
+    //     } else {
+    //         // Retrieve cart items from session storage or elsewhere
+    //         // $cartItems = // Retrieve cart items from session storage or elsewhere
+    //     }
 
-        // Return cart data as JSON response
-        return response()->json(['cartItems' => $cartItems]);
-    }
+    //     // Return cart data as JSON response
+    //     return response()->json(['cartItems' => $cartItems]);
+    // }
 
 
     public function purchase(Request $request)
     {   
+        // Validate the incoming request
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'quantity' => 'required|integer|min:1'
+        ]);
+
         if (Auth::check()) {
+            // Handle the case when the user is authenticated
             $user = Auth::user();
 
-            
-
-
-            // qunatity field is not filled the buy button was pressed
-            if (!$request->filled('quantity')){
-                $request->quantity = 1;
-            }
+            // // qunatity field is not filled the buy button was pressed
+            // if (!$request->filled('quantity')){
+            //     $request->quantity = 1;
+            // }
 
             // Check if the user already has a shopping cart
             $shoppingCart = $user->shoppingCart;
-    
-            // dd($user->shoppingCart);
-    
+        
             if (!$shoppingCart) {
                 // If the user does not have a shopping cart, create a new one
                 $shoppingCart = $user->shoppingCart()->create([
@@ -65,12 +68,6 @@ class ShoppingCartController extends Controller
     
             // Get the UUID of the shopping cart
             $shoppingCartUuid = $shoppingCart->id;
-    
-            // Validate the incoming request
-            $request->validate([
-                'product_id' => 'required|exists:products,id',
-                'quantity' => 'required|integer|min:1'
-            ]);
     
             // Update cart item (logic remains the same)
             $cartItem = $shoppingCart->items()->where('productId', $request->product_id)->first();
@@ -94,9 +91,16 @@ class ShoppingCartController extends Controller
             
         } else {
             // Handle the case when the user is not authenticated
-            // Retrieve cart items from session storage or elsewhere
-            // $cartItems = // Retrieve cart items from session storage or elsewhere
-            $user = null; // Set $user to null if user is not authenticated
+
+            $cartItems = session()->get('cartItems', []);
+
+            $quantity = isset($cartItems[$request->product_id]) ? $cartItems[$request->product_id] : 0;
+            
+            $cartItems[$request->product_id] = $quantity + $request->quantity;
+        
+            session()->put('cartItems', $cartItems);
+
+            $user = null;
         }
     
         // Retrieve products
@@ -130,16 +134,27 @@ class ShoppingCartController extends Controller
                     $cartItem->save();
                     
                     // Retrieve products
-                    $products = Product::where('type', 'Donut')->get();
                     
                     // Return back to the previous page with products and user ID
-                    return back()->with('products', $products)->with('user', $user);
                 }
             }
+        } else {
+            
+            $cartItems = session()->get('cartItems', []);
+            
+            $quantity = isset($cartItems[$request->product_id]) ? $cartItems[$request->product_id] : 0;
+            
+            $cartItems[$request->product_id] = $quantity + 1;
+            
+            session()->put('cartItems', $cartItems);
+            
+            $user = null;
         }
-
+        
         // Handle the case when the user is not authenticated or the product is not found
-        return back()->with('error', 'Failed to increase product quantity.');
+        $products = Product::where('type', 'Donut')->get();
+        return back()->with('products', $products)->with('user', $user);
+        // return back()->with('error', 'Failed to increase product quantity.');
     }
 
     // Method to decrease product quantity
@@ -170,23 +185,47 @@ class ShoppingCartController extends Controller
                 }
                 
                 // Retrieve products
-                $products = Product::where('type', 'Donut')->get();
-                    
+                
                 // Return back to the previous page with products and user ID
-                return back()->with('products', $products)->with('user', $user);
             }
+        } else {
+            $cartItems = session()->get('cartItems', []);
+            
+            $quantity = isset($cartItems[$request->product_id]) ? $cartItems[$request->product_id] : 0;
+            
+            $cartItems[$request->product_id] = $quantity - 1;
+            
+            if($cartItems[$request->product_id] == 0){
+                unset($cartItems[$request->product_id]);
+            }
+            
+            session()->put('cartItems', $cartItems);
+            
+            
+            $user = null;
+            
+            // return back()->with('products', $products);
         }
-
+        
+        $products = Product::where('type', 'Donut')->get();
+        return back()->with('products', $products)->with('user', $user);
         // Handle the case when the user is not authenticated or the product is not found
-        return back()->with('error', 'Failed to decrease product quantity.');
+        // return back()->with('error', 'Failed to decrease product quantity.');
     }
 
     // Method to remove item
     public function removeItem(string $productId)
     {
-        DB::delete('DELETE FROM "cartItems" WHERE "productId" = ?', [$productId]);
+        if(Auth::check()){
+            DB::delete('DELETE FROM "cartItems" WHERE "productId" = ?', [$productId]);
+            $user = Auth::user();
+        } else {
+            $cartItems = session()->get('cartItems', []);
+            unset($cartItems[$productId]);
+            session()->put('cartItems', $cartItems);
+            $user = null;
+        }
 
-        $user = Auth::user();
         // Return back to the previous page with user
         return back()->with('user', $user);
     }
@@ -218,14 +257,36 @@ class ShoppingCartController extends Controller
 
                 // dd($cartItemsProducts);
 
-                return view('carts.cart1', [
-                    'user' => $user,
-                    'cartItemsProducts' => $cartItemsProducts,
-                ]);
             }
+        }else {
+            $cartItems = session()->get('cartItems', []);
+
+            // Fetch product details for each cart item
+            $cartItemsProducts = [];
+
+            foreach ($cartItems as $productId => $quantity) {
+                $product = Product::find($productId);
+                
+                if ($product) {
+                    // Format product data as needed
+                    $cartItemsProducts[] = (object) [
+                        'productId' => $productId,
+                        'quantity' => $quantity,
+                        'name' => $product->name,
+                        'price' => $product->price,
+                        'imagePath' => $product->imagePath,
+                        // Add other product attributes as needed
+                    ];
+                }
+            }
+            $user = null;
         }
         // Handle the case when the user is not authenticated or the shopping cart is not found
-        return back()->with('error', 'Failed to load shopping cart items.');
+        return view('carts.cart1', [
+            'user' => $user,
+            'cartItemsProducts' => $cartItemsProducts,
+        ]);
+        // return back()->with('error', 'Failed to load shopping cart items.');
     }
 
     /**
