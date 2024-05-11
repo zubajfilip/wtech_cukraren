@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+body{
+    background-color: #FFF5E4;
+}
+
+div .log-reg-rect{
+    background-color: #AAC8A7
+    ;
+}
+
+.log-reg-button{
+    background-color: #7D0A0A;
+    color: #FFF5E4;
+}
+
+.log-reg-button:hover{
+    background-color: #FFF5E4;
+    color: #000000;
+}
