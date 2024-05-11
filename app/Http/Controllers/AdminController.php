@@ -6,89 +6,28 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\CategoryProduct;
 use App\Models\Category;
+use App\Models\Type;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
-
-    public function addProduct(Request $request)
-    {
-        // Check if a user is logged in and if its admin
-        if (!Auth::check() || !Admin::where('userId', $user->id)->exists()) {
-            $user = Auth::user();
-            return view('admins.noAuth')->with($user);
-        }
-
-        // user if logged in and is admin
-
-        $user = Auth::user();
-
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'type' => 'required|string|in:Donut,Cake',
-            'description' => 'required|string',
-            'price' => 'required|numeric|min:0',
-            'imagePath' => 'required|string',
-            'weight' => 'required|string',
-        ]);
-
-        $product = new Product();
-        $product->id = Str::uuid();
-        $product->name = $request->name;
-        $product->type = $request->type;
-        $product->description = $request->description;
-        $product->price = $request->price;
-        $product->imagePath = $request->imagePath;
-        $product->weight = $request->weight;
-        
-        $product->save();
-
-        return response()->json(['message' => 'Product added successfully']);
-    }
-
-
-
-    public function addProductCategory(Request $request)
-    {
-
-        // Check if a user is logged in and if its admin
-        if (!Auth::check() || !Admin::where('userId', $user->id)->exists()) {
-            $user = Auth::user();
-            return view('admins.noAuth')->with($user);
-        }
-
-        // user if logged in and is admin
-
-        $user = Auth::user();
-
-
-        $request->validate([
-            'product_id' => 'required|exists:products,id',
-            'category_name' => 'required|string',
-        ]);
-
-        $product = Product::findOrFail($request->product_id);
-        $category = Category::where('name', $request->category_name)->firstOrFail();
-
-        $joinTable = new CategoryProduct();
-        $joinTable->productId = $product->id;
-        $joinTable->categoryId = $category->id;
-        
-        $product->save();
-
-        return response()->json(['message' => 'Category added to product successfully']);
-    }
-
-
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $products = Product::all();
+        // dd($products);
+        return view('admins.index', [
+            'products'=>$products,
+        ]);
     }
 
     /**
@@ -96,7 +35,12 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
+        $types = Type::all();
+        $categories = Category::all();
+        return view('admins.create', [
+            'types'=>$types,
+            'categories'=>$categories,
+        ]);
     }
 
     /**
@@ -104,7 +48,46 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $types = Type::pluck('name')->toArray();
+        $categories = Category::pluck('id')->toArray();
+        
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'type' => ['required', 'string', Rule::in($types)], 
+            'description' => 'required|string',
+            'price' => 'required|numeric|min:0',
+            'weight' => 'required|string',
+            'image' => 'required|image|max:2048',
+            'categories' => ['array', Rule::in($categories)],
+        ]);
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images', 'public');
+        }
+
+        // dd($imagePath);
+
+        $product = Product::create([
+            'id' => Str::uuid(),
+            'name' => $request->input('name'),
+            'type' => $request->input('type'),
+            'description' => $request->input('description'),
+            'price' => $request->input('price'),
+            'imagePath' => $imagePath,
+            'weight' => $request->input('weight'),
+        ]);
+
+        foreach ($request->input('categories') as $categoryId) {
+            CategoryProduct::create([
+                'productId' => $product->id,
+                'categoryId' => $categoryId,
+            ]);
+        }
+
+        // return redirect('/admins/'.$task->id);
+        return redirect('/admins');
     }
 
     /**
@@ -112,7 +95,8 @@ class AdminController extends Controller
      */
     public function show(string $id)
     {
-        //
+        // $product = Product::find($id);
+        // return view('admins.show', ['product' => $product]);
     }
 
     /**
@@ -120,22 +104,92 @@ class AdminController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        // dd($product);
+        $types = Type::all();
+        $product = Product::find($id);
+        $categories = Category::all();
+
+        return view('admins.edit', [
+            'product' => $product,
+            'types'=> $types,
+            'categories'=>$categories,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateProductRequest $request, string $id)
     {
-        //
+        $types = Type::pluck('name')->toArray();
+        $categories = Category::pluck('id')->toArray(); 
+
+        
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'type' => ['required', 'string', Rule::in($types)],
+            'description' => 'required|string',
+            'price' => 'required|numeric|min:0',
+            'weight' => 'required|string',
+            'categories' => ['array', Rule::in($categories)],
+        ]);
+
+        
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images', 'public');
+        }
+
+        $product = Product::find($id);
+
+        $product->name = $request->name;
+        $product->type = $request->type;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->weight = $request->weight;
+        $product->imagePath = $imagePath ?? $product->imagePath;
+
+        $product->save();
+
+        if ($request->has('categories')) {
+            $product->categories()->sync($request->categories);
+        } else {
+            $product->categories()->detach();
+        }
+        
+        // $request->session()->flash('message', 'Product was successfully updated.');
+        
+        return redirect('admins');
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
-        //
+        $product = Product::find($id);
+        $product->categories()->detach();
+        Storage::disk('public')->delete($product->imagePath);
+        $product->delete();
+        // $request->session()->flash('message', 'Úloha bola úspešne vymazaná.');
+        return redirect('admins');
+    }
+
+    public function search(Request $Request)
+    {
+        $user = Auth::user();
+        $searchTerm = $Request->input('search');
+
+        DB::statement('CREATE EXTENSION IF NOT EXISTS unaccent');
+
+        $sql = "SELECT * 
+        FROM products 
+        WHERE unaccent(name) ILIKE unaccent('%' || ? || '%')";
+        
+        $products = DB::select($sql, [$searchTerm]);
+        
+        //dd($products);
+        return view('admins.index', compact('products'));
     }
 }

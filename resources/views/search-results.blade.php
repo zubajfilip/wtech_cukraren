@@ -50,6 +50,7 @@
                     <form action="{{ route('purchase') }}" method="post">
                         @csrf
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
+                        <input id="quantity" type="hidden" name="quantity" value="1">
                         <button type="submit" name="buy_button" class="btn btn-secondary buy-button">Objednať</button>
                     </form>
                     @endif
@@ -57,7 +58,9 @@
                 @endforeach
             </div>
             @else
-            <p>No products found for your search.</p>
+            <div class="container text-center mt-3 mb-3">
+                <h2>Takéto produkty nemáme 🥺</h2>
+            </div>
             @endif
         </div>
     </main>

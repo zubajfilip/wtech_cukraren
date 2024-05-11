@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -57,4 +58,10 @@ class User extends Authenticatable
         return $this->hasOne(ShoppingCart::class, 'userId', 'id');
     }
 
+    public function isAdmin()
+    {
+        return DB::table('admins')->where('userId', $this->id)->exists();
+    }
+
+    
 }

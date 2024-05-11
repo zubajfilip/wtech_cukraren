@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Product;
 use App\Models\Admin;
 use App\Models\Category;
+use App\Models\Type;
 use App\Models\CategoryProduct;
 use Illuminate\Support\Str;
 
@@ -53,6 +54,11 @@ class DatabaseSeeder extends Seeder
             'name' => 'posýpaný',
         ]);
 
+        $not_sprinkled_category = Category::create([
+            'id' => Str::uuid(),
+            'name' => 'neposýpaný',
+        ]);
+
         $glazed_category = Category::create([
             'id' => Str::uuid(),
             'name' => 'glazúrovaný',
@@ -63,10 +69,19 @@ class DatabaseSeeder extends Seeder
             'name' => 'poliatý',
         ]);
 
+        $not_topping_category = Category::create([
+            'id' => Str::uuid(),
+            'name' => 'nepoliatý',
+        ]);
 
         $stuffed_category = Category::create([
             'id' => Str::uuid(),
             'name' => 'plnený',
+        ]);
+
+        $unstuffed_category = Category::create([
+            'id' => Str::uuid(),
+            'name' => 'neplnený',
         ]);
 
         // Donuts seeders
@@ -78,7 +93,7 @@ class DatabaseSeeder extends Seeder
             'description' => 'Toto je description text pre Čoko donut',
             'price' => 0.90,
             'imagePath' => 'images/choco_glaze.jpg',
-            'weight' => '100g',
+            'weight' => 100,
         ]);
 
         $suga_donut = Product::create([
@@ -88,7 +103,7 @@ class DatabaseSeeder extends Seeder
             'description' => 'Toto je description text pre cukrový donut',
             'price' => 1.90,
             'imagePath' => 'images/classic_sugar.jpg',
-            'weight' => '90g',
+            'weight' => 90,
         ]);
 
         $coko_sprinkle_donut = Product::create([
@@ -98,7 +113,7 @@ class DatabaseSeeder extends Seeder
             'description' => 'Toto je description text pre Čokoládový posýpaný donut',
             'price' => 2,
             'imagePath' => 'images/choco_sprinkle.jpg',
-            'weight' => '100g',
+            'weight' => 100,
         ]);
 
         
@@ -109,7 +124,7 @@ class DatabaseSeeder extends Seeder
             'description' => 'Toto je description text pre Klasický Glazúrový Donut',
             'price' => 0.7,
             'imagePath' => 'images/classic_glazed.jpg',
-            'weight' => '89g',
+            'weight' => 89,
         ]);
 
         $blue_donut = Product::create([
@@ -119,7 +134,7 @@ class DatabaseSeeder extends Seeder
             'description' => 'Toto je description text pre Modrý posýpaný donut',
             'price' => 5,
             'imagePath' => 'images/blue_sprinkle.jpg',
-            'weight' => '130g',
+            'weight' => 130,
         ]);
 
         // category product join table seeders
@@ -129,8 +144,23 @@ class DatabaseSeeder extends Seeder
         ]);
 
         CategoryProduct::create([
+            'productId' => $coko_donut->id,
+            'categoryId' => $unstuffed_category->id,
+        ]);
+
+        CategoryProduct::create([
+            'productId' => $coko_donut->id,
+            'categoryId' => $not_sprinkled_category->id,
+        ]);
+
+        CategoryProduct::create([
             'productId' => $coko_sprinkle_donut->id,
             'categoryId' => $sprinkled_category->id,
+        ]);
+
+        CategoryProduct::create([
+            'productId' => $coko_sprinkle_donut->id,
+            'categoryId' => $unstuffed_category->id,
         ]);
 
         CategoryProduct::create([
@@ -144,8 +174,33 @@ class DatabaseSeeder extends Seeder
         ]);
 
         CategoryProduct::create([
+            'productId' => $classic_donut->id,
+            'categoryId' => $not_sprinkled_category->id,
+        ]);
+
+        CategoryProduct::create([
+            'productId' => $classic_donut->id,
+            'categoryId' => $not_topping_category->id,
+        ]);
+
+        CategoryProduct::create([
+            'productId' => $classic_donut->id,
+            'categoryId' => $unstuffed_category->id,
+        ]);
+
+        CategoryProduct::create([
             'productId' => $suga_donut->id,
-            'categoryId' => $topping_category->id,
+            'categoryId' => $sprinkled_category->id,
+        ]);
+
+        CategoryProduct::create([
+            'productId' => $suga_donut->id,
+            'categoryId' => $unstuffed_category->id,
+        ]);
+
+        CategoryProduct::create([
+            'productId' => $suga_donut->id,
+            'categoryId' => $not_topping_category->id,
         ]);
 
         CategoryProduct::create([
@@ -161,6 +216,15 @@ class DatabaseSeeder extends Seeder
         CategoryProduct::create([
             'productId' => $blue_donut->id,
             'categoryId' => $stuffed_category->id,
+        ]);
+
+        // type seeders
+        Type::create([
+            'name' => 'Donut',
+        ]);
+
+        Type::create([
+            'name' => 'Cake',
         ]);
     }
 }

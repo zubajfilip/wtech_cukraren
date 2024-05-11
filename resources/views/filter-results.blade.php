@@ -12,6 +12,49 @@
     <main>
 
         <div class="container-fluid products">
+            <div class="col d-flex justify-content-end md-text me-4">
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent2" aria-controls="navbarSupportedContent2"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    🔧
+                </button>
+            </div>
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent2">
+                    <form action="{{ route('product_filter') }}" method="get">
+                        @csrf
+                        <div class="form-group">
+                            <label for="priceFrom">Cena od (€)</label>
+
+                            <input type="number" class="form-control" name="priceFrom"
+                                placeholder="Zadajte minimálnu cenu">
+                        </div>
+                        <div class="form-group">
+                            <label for="priceTo">Cena do (€)</label>
+                            <input type="number" class="form-control" name="priceTo"
+                                placeholder="Zadajte maximálnu cenu">
+                        </div>
+                        <div class="form-group">
+                            <label for="sortBy">Zoradenie</label>
+                            <select class="form-control" id="sortBy" name="sortBy">
+                                <option value="Od najlacnejšieho">Od najlacnejšieho</option>
+                                <option value="Od najdrahšieho">Od najdrahšieho</option>
+                            </select>
+                        </div>
+                        @foreach($categories as $category)
+                        <div class="form-check">
+                            <input type="checkbox" id="{{$category->id}}" class="form-check-input" name="categories[]"
+                                value="{{$category->id}}">
+                            <label class="form-check-label" for="{{$category->id}}">{{$category->name}}</label>
+                        </div>
+                        @endforeach
+                        <button type="submit" class="btn btn-primary">Filtrovať</button>
+                    </form>
+                </div>
+            </div>
+
+            
             <div class="row d-flex justify-content-center">
                 @if (count($products) > 0)
                 @foreach ($products as $product)

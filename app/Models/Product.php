@@ -8,10 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'id',
+        'name',
+        'type',
+        'description',
+        'price',
+        'imagePath',
+        'weight',
+    ];
+
+
     
     public function getIdAttribute()
     {
-        return (string) $this->attributes['id']; 
+        return $this->attributes['id']; 
     }
 
     public function categories()
