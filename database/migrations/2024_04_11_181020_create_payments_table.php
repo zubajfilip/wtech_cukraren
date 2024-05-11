@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('addresses', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('street', 255);
-            $table->string('city', 100);
-            $table->string('postalCode', 20);
-            $table->string('country', 100);
+            $table->string('name');
+            $table->decimal('price', 10, 2);
             $table->timestamps();
         });
     }
@@ -26,9 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('addresses', function (Blueprint $table) {
-            //
-        });
-        Schema::dropIfExists('addresses');
+        Schema::dropIfExists('payments');
     }
 };

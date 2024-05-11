@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DonutController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\Cart1Controller;
@@ -31,8 +32,11 @@ Route::resource('users', UserController::class);
 
 // Route::get('searchadmin', [AdminController::class, 'search'])->name('searchadmin');
 
+Route::get('/cart2', [OrderController::class, 'index'])->name('cart2');
 
+Route::post('/cart3', [OrderController::class, 'pay_and_delivery'])->name('cart3');
 
+Route::post('/final', [OrderController::class, 'handle_order'])->name('handle_order');
 
 Route::resource('/', ProductController::class);
 
@@ -59,13 +63,7 @@ Route::resource('register', RegisterController::class);
 
 Route::resource('cart1', ShoppingCartController::class);
 
-Route::resource('cart2', Cart2Controller::class);
-
-Route::resource('cart3', Cart3Controller::class);
-
 Route::get('/search', [SearchController::class, 'search'])->name('search');
-
-
 
 Route::get('/dashboard', function () {
     return view('dashboard');

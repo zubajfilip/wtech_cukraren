@@ -83,12 +83,26 @@ class ProductController extends Controller
         $user = Auth::user();
         $categoriesAll = Category::all();
 
+        if($user){
+            $shoppingCart = $user->shoppingCart;
+            if (!$shoppingCart) {
+                // If the user doesn't have a shopping cart yet, create a new one
+                $shoppingCart = new ShoppingCart();
+                $shoppingCart->id = Str::uuid();
+                $shoppingCart->userId = $user->id;
+                $shoppingCart->save();
+            }
+        } else{
+            $shoppingCart = session()->get('cartItems', []);
+        }
+
         // return view('search-results', compact('products'))->with('user', $user)->with('categories', $categoriesAll);
         return view('donuts.index', [
             'user' => $user,
             'products' => $products,
             'categories' => $categoriesAll,
             'categoriesChecked' => $request->categories,
+            'shoppingCart' => $shoppingCart,
         ]);
     }
 

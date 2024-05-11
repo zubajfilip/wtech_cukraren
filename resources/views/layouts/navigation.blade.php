@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="/home">
+                    <a href="/">
                         <img class="img-fluid" src="../storage/images/logo.png" width="50" height="50">
                     </a>
                 </div>
