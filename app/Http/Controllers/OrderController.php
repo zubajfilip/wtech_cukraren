@@ -202,13 +202,23 @@ class OrderController extends Controller
             ]);
         }
         
-        $address = Address::create([
-            'id' => Str::uuid(),
-            'street' => $request->input('street'),
-            'city' => $request->input('city'),
-            'postalCode' => $request->input('psc'),
-            'country' => 'Slovensko',
-        ]);
+        $address = Address::where('street', $request->input('street'))
+            ->where('city', $request->input('city'))
+            ->where('postalCode', $request->input('psc'))
+            ->where('country', 'Slovensko')
+            ->first();
+
+        if (!$address) {
+            $address = Address::create([
+                'id' => Str::uuid(),
+                'street' => $request->input('street'),
+                'city' => $request->input('city'),
+                'postalCode' => $request->input('psc'),
+                'country' => 'Slovensko',
+            ]);
+        }
+
+        
 
         // dd($orderStatusPending->id);
 
@@ -234,9 +244,11 @@ class OrderController extends Controller
             if($user){
                 $shoppingCartId = $user->shoppingCart->id;
 
-                DB::delete('DELETE FROM "cartItems" WHERE "productId" = ? AND "shoppingCartId" = ?', [$cip->id, $shoppingCartId]);
+                DB::delete('DELETE FROM "cartItems" WHERE "productId" = ? AND "shoppingCartId" = ?', [$cip->productId, $shoppingCartId]);
             }
-            
+        }
+        if(!$user){
+            session()->forget('cartItems');
         }
 
         return view('carts.final', [
