@@ -79,7 +79,9 @@ class AdminController extends Controller
             'weight' => $request->input('weight'),
         ]);
 
-        foreach ($request->input('categories') as $categoryId) {
+        $categories = $request->input('categories');
+        if($categories)
+        foreach ($categories as $categoryId) {
             CategoryProduct::create([
                 'productId' => $product->id,
                 'categoryId' => $categoryId,
@@ -95,8 +97,8 @@ class AdminController extends Controller
      */
     public function show(string $id)
     {
-        // $product = Product::find($id);
-        // return view('admins.show', ['product' => $product]);
+        $product = Product::find($id);
+        return view('admins.show', ['product' => $product]);
     }
 
     /**
@@ -190,6 +192,8 @@ class AdminController extends Controller
         $products = DB::select($sql, [$searchTerm]);
         
         //dd($products);
-        return view('admins.index', compact('products'));
+        return view('admins.index', [
+            'products' => $products,
+        ]);
     }
 }

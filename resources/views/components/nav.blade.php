@@ -3,7 +3,7 @@
         <div class="container-fluid">
 
             <a class="navbar-brand" href="{{ url('/') }}"><img class="img-fluid"
-                    src="../storage/images/logo.png" width="140" height="100"></a>
+                    src="{{ asset('storage/images/logo.png') }}" width="140" height="100"></a>
             <div class="d-flex">
 
                 <a href="{{ url('/cart1') }}" class="nav-link ms-2 md-text hidden-md-up">🛒</a>

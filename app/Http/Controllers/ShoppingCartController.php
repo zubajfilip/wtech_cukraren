@@ -15,29 +15,6 @@ use Illuminate\Support\Facades\DB;
 class ShoppingCartController extends Controller
 {
 
-    
-
-    // public function getCartData()
-    // {
-    //     // Check if user is authenticated
-    //     if (Auth::check()) {
-    //         $user = Auth::user();
-    //         // Retrieve cart items from the database
-    //         $cartItems = CartItem::join('shoppingCarts', 'cartItems.shoppingCartId', '=', 'shoppingCarts.id')
-    //             ->join('products', 'cartItems.productId', '=', 'products.id')
-    //             ->where('shoppingCarts.userId', '=', $user->id)
-    //             ->select('cartItems.*', 'products.*')
-    //             ->get();
-    //     } else {
-    //         // Retrieve cart items from session storage or elsewhere
-    //         // $cartItems = // Retrieve cart items from session storage or elsewhere
-    //     }
-
-    //     // Return cart data as JSON response
-    //     return response()->json(['cartItems' => $cartItems]);
-    // }
-
-
     public function purchase(Request $request)
     {   
         // Validate the incoming request

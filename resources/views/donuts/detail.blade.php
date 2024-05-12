@@ -1,14 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('app')
 
-<head>
-    @include('components.head')
-
-</head>
-
-<body>
-    @include('components.nav')
-
+@section('content')
     <main class="container-fluid">
         <div class="container-fluid product">
             <nav aria-label="breadcrumb">
@@ -39,14 +31,14 @@
 
 
                         @php
-                            if (isset($user)) {
-                            // User is authenticated, access items directly
-                            $cartItem = $shoppingCart->items->firstWhere('productId', $product->id);
-                            $quantity = $cartItem ? $cartItem->quantity : 0;
-                            } else{
-                            // User is not authenticated
-                            $cartItems = session()->get('cartItems', []);
-                            $quantity = isset($cartItems[$product->id]) ? $cartItems[$product->id] : 0;
+                        if (isset($user)) {
+                        // User is authenticated, access items directly
+                        $cartItem = $shoppingCart->items->firstWhere('productId', $product->id);
+                        $quantity = $cartItem ? $cartItem->quantity : 0;
+                        } else{
+                        // User is not authenticated
+                        $cartItems = session()->get('cartItems', []);
+                        $quantity = isset($cartItems[$product->id]) ? $cartItems[$product->id] : 0;
                         }
                         @endphp
 
@@ -83,37 +75,27 @@
             </div>
         </div>
 
-    </main>
-    <div class="container-fluid mt-4">
-        <div class="Suggestions text-center">
-            <h3>Ostatní tiež objednávajú</h3>
-            <!-- pridat sem ostatne produkty -->
-            <div class="row d-flex justify-content-center">
-                @foreach ($otherProducts as $otherProduct)
-                <div
-                    class="col-md-4 col-sm-6 col-12 d-flex flex-column align-items-center justify-content-end product text-center">
-                    <a href="{{ route('donuts.show', $otherProduct->id) }}">
-                        <img src="{{ asset('storage/' . $otherProduct->imagePath) }}" alt="{{ $otherProduct->name }}"
-                            width="150" class="img-fluid">
-                    </a>
-                    <div class="name-price">
-                        <p>{{ $otherProduct->name }}</p>
-                        <p class="price">{{ $otherProduct->price }}€/ks</p>
+        <div class="container-fluid mt-4">
+            <div class="Suggestions text-center">
+                <h3>Ostatní tiež objednávajú</h3>
+                <!-- pridat sem ostatne produkty -->
+                <div class="row d-flex justify-content-center">
+                    @foreach ($otherProducts as $otherProduct)
+                    <div
+                        class="col-md-4 col-sm-6 col-12 d-flex flex-column align-items-center justify-content-end product text-center">
+                        <a href="{{ route('donuts.show', $otherProduct->id) }}">
+                            <img src="{{ asset('storage/' . $otherProduct->imagePath) }}"
+                                alt="{{ $otherProduct->name }}" width="150" class="img-fluid">
+                        </a>
+                        <div class="name-price">
+                            <p>{{ $otherProduct->name }}</p>
+                            <p class="price">{{ $otherProduct->price }}€/ks</p>
+                        </div>
                     </div>
+                    @endforeach
                 </div>
-                @endforeach
             </div>
         </div>
-    </div>
-
-
-    @include('components.footer')
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
+    </main>
     <script src="{{ asset('js/detail_donuts.js') }}"></script>
-</body>
-
-</html>
+@endsection

@@ -22,11 +22,26 @@ class SearchController extends Controller
         
         $products = DB::select($sql, [$searchTerm]);
         
-        //dd($products);
+        if ($user) {
+            // User is logged in, fetch their shopping cart
+            $shoppingCart = $user->shoppingCart;
+            // dd($shoppingCart);
+            if (!$shoppingCart) {
+                // If the user doesn't have a shopping cart yet, create a new one
+                $shoppingCart = new ShoppingCart();
+                $shoppingCart->id = Str::uuid();
+                $shoppingCart->userId = $user->id;
+                $shoppingCart->save();
+            }
+        } else {
+            $shoppingCart = session()->get('cartItems', []);
+        }
+        
         // Return the search results to the view
-        return view('search-results', [
+        return view('products.search-results', [
             'products' => $products,
             'user' => $user,
+            'shoppingCart' => $shoppingCart,
         ]);
     }
 }
