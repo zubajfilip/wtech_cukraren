@@ -62,12 +62,12 @@ class ProductController extends Controller
             $filteredProducts->where('price', '<=', $priceTo);
         }
 
-        
-
-        foreach ($request->categories as $categoryId) {
-            $filteredProducts->whereHas('categories', function($query) use ($categoryId) {
-                $query->where('categories.id', $categoryId);
-            });
+        if($request->categories){
+            foreach ($request->categories as $categoryId) {
+                $filteredProducts->whereHas('categories', function($query) use ($categoryId) {
+                    $query->where('categories.id', $categoryId);
+                });
+            }
         }
         
         
@@ -78,7 +78,7 @@ class ProductController extends Controller
             $filteredProducts->orderBy('price', 'desc');
         }
         
-        $products = $filteredProducts->get();
+        $products = $filteredProducts->simplePaginate(2);
 
         $user = Auth::user();
         $categoriesAll = Category::all();

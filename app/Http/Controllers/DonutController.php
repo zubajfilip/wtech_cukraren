@@ -18,7 +18,7 @@ class DonutController extends Controller
      */
     public function index()
     {
-        $products = Product::where('type', 'Donut')->get();
+        $products = Product::where('type', 'Donut')->simplePaginate(2);
         $categories = Category::all();
         
         $user = Auth::user();

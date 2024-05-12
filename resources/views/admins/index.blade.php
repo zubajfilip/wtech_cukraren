@@ -60,7 +60,7 @@
                             class="img-fluid">
                     </div>
                     <div class="col-4">
-                        <a href="/admins/{{$product->id}}"><span>{{$product->name}}</span></a>
+                        <span>{{$product->name}}</span>
                     </div>
                     <div class="col-1">
                         <span>{{$product->price}}€</span>

@@ -24,6 +24,9 @@ class SearchController extends Controller
         
         //dd($products);
         // Return the search results to the view
-        return view('search-results', compact('products'))->with('user', $user);
+        return view('search-results', [
+            'products' => $products,
+            'user' => $user,
+        ]);
     }
 }
