@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    @include('components.head')
-</head>
-
-<body>
-    @include('components.nav')
+@extends('app')
+@section('content')
     @if(empty($cartItemsProducts))
 
     <div class="container-fluid d-flex mb-4 justify-content-center">
@@ -182,18 +175,14 @@
 
         <!-- <div class="price-sum">0,86€</div> -->
 
+        <div class="container-fluid d-flex mb-4">
+            <div class="col-6 d-flex justify-content-left">
+                <a href="/home"><button type="button" class="btn btn-secondary">Spät</button></a>
+            </div>
+            <div class="col-6 d-flex justify-content-end">
+                <a href="{{ url('/cart2') }}"><button type="button" class="btn btn-success">Pokračovať</button></a>
+            </div>
+        </div>
     </main>
-    <div class="container-fluid d-flex mb-4">
-        <div class="col-6 d-flex justify-content-left">
-            <a href="/home"><button type="button" class="btn btn-secondary">Spät</button></a>
-        </div>
-        <div class="col-6 d-flex justify-content-end">
-            <a href="{{ url('/cart2') }}"><button type="button" class="btn btn-success">Pokračovať</button></a>
-        </div>
-    </div>
     @endif
-
-    @include('components.footer')
-</body>
-
-</html>
+@endsection

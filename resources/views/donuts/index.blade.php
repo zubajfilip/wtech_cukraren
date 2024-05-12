@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    @include('components.head')
-</head>
+@extends('app')
 
-<body>
-    @include('components.nav')
-
+@section('content')
     <main>
         <div class="container-fluid products">
             <nav class="container-fluid">
@@ -138,8 +132,4 @@
             </div>
         </div>
     </main>
-
-    @include('components.footer')
-</body>
-
-</html>
+@endsection

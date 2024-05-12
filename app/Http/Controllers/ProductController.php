@@ -23,16 +23,15 @@ class ProductController extends Controller
         if (Auth::check()) {
             $user = Auth::user();
 
-            return view('index', [
+            return view('products.index', [
                 'user' => $user
             ]);
         }
 
-        return view('index', [
+        return view('products.index', [
             'user' => null,
         ]);
     }
-
 
     public function filter(Request $request)
     {

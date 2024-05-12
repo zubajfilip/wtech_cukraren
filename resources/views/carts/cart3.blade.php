@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    @include('components.head')
-</head>
-
-<body>
-    @include('components.nav')
+@extends('app')
+@section('content')
     @if(empty($cartItemsProducts))
 
     <div class="container-fluid d-flex mb-4 justify-content-center">
@@ -53,18 +46,7 @@
                 <div class="row main-indent mt-4">
 
                     <div class="col-12 col-md-7 col-lg-7 delivery-data mb-4">
-                        <!-- <div class="col-12">
-                            <input type="radio" id="saved-info" value="saved-info" name="saved-info" disabled>
-                            <label for="saved-info">Dodať na uloženú adresu</label>
-                        </div>
-                        <div class="col-12">
-                            <input type="radio" id="add-info" value="add-info" name="saved-info" checked>
-                            <label for="add-info">Zadať dodacie údaje</label>
-                        </div> -->
                         <div class="state mb-3">
-                            <!-- <div class="state lable ">
-                                Štát
-                            </div> -->
                             <label for="country">Štát</label>
                             <input id="country" name="country" value="Slovensko" class="form-control" disabled placeholder="Slovensko">
                         </div>
@@ -157,9 +139,4 @@
         </div>
     </form>
     @endif
-
-
-    @include('components.footer')
-</body>
-
-</html>
+@endsection
