@@ -23,7 +23,7 @@
                 @if(isset($user->email))
                     <a href="{{ url('/profile') }}"><p>{{ $user->email }}</p></a>
                 @else
-                    <a href="{{ url('/login') }}"> <button class="btn btn-primary">Login</button></a>
+                    <a href="{{ url('/login') }}"> <button class="btn btn-primary">Prihlásenie</button></a>
                 @endif
                 
 
@@ -37,7 +37,7 @@
             @if(isset($user->email))
                 <a href="{{ url('/profile') }}"><p>{{ $user->email }}</p></a>
             @else
-                <a href="{{ url('/login') }}"><button class="col-12 btn btn-primary mb-2 justify-content-center">Login</button></a>
+                <a href="{{ url('/login') }}"><button class="col-12 btn btn-primary mb-2 justify-content-center">Prihlásenie</button></a>
             @endif
         
         

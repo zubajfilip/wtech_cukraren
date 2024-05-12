@@ -4,8 +4,8 @@
 
     <div class="container-fluid d-flex mb-4 justify-content-center">
         <div class="col-6 text-center">
-            <h1>WOOP WOOP KOSIK JE PRAZDNY</h1>
-            <a href="/"><button type="button" class="btn btn-secondary">Späť nakupovať</button></a>
+            <h1>Váš košík je prázdny</h1>
+            <a href="/"><button type="button" class="btn btn-secondary">Vrátiť sa k nakupovaniu</button></a>
         </div>
     </div>
     @else
