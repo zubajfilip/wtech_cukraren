@@ -76,8 +76,8 @@ class ProductController extends Controller
         } elseif ($sortBy === 'Od najdrahšieho') {
             $filteredProducts->orderBy('price', 'desc');
         }
-        
-        $products = $filteredProducts->simplePaginate(2);
+
+        $products = $filteredProducts->paginate(2)->appends($request->all());
 
         $user = Auth::user();
         $categoriesAll = Category::all();

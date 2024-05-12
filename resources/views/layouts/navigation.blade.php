@@ -5,8 +5,9 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="/">
-                        <img class="img-fluid" src="../storage/images/logo.png" width="50" height="50">
+                    <a href="{{Auth::user()->isAdmin() ? '/admins' : '/' }}">
+                        
+                        <img class="img-fluid" src="{{ asset('storage/images/logo.png') }}" width="50" height="50">
                     </a>
                 </div>
 
@@ -15,6 +16,20 @@
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
+                @if(Auth::user()->isAdmin())
+                <a href="{{ url('/admins') }}"> 
+                    <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150 ml-4">
+                        Admin Rozhranie 👑
+                    </button>
+                </a>
+                @else
+                <a href="{{ url('/') }}"> 
+                    <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150 ml-4">
+                        Ísť nakupovať 🛍️
+                    </button>
+                </a>
+                @endif
+
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button

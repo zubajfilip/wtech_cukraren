@@ -1,6 +1,6 @@
-<header>
+<header class="header">
 
-    <nav class="navbar navbar-expand-md bg-body-tertiary">
+    <nav class="navbar navbar-expand-md">
         <div class="container-fluid">
 
             <a class="navbar-brand" href="/admins"><img class="img-fluid" src="{{ asset('storage/images/logo.png') }}" width="140"
@@ -21,9 +21,9 @@
                     <input class="form-control me-2" type="search" name="search" placeholder="Search">
                     <button class="btn btn-outline-success me-2" type="submit">Hľadať</button>
                 </form>
-                <!-- <a href="{{ url('/profile') }}">  -->
-                    <button class="btn btn-primary">Admin Rozhranie 👑</button>
-                <!-- </a> -->
+                <a href="{{ url('/profile') }}"> 
+                    <button class="btn btn-primary">Admin Profil 👑</button>
+                </a>
             </div>
         </div>
     </nav>

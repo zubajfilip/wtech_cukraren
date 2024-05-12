@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\DB;
+use App\Models\ShoppingCart;
+use App\Models\CartItem;
+
 
 class ProfileController extends Controller
 {
@@ -45,8 +49,21 @@ class ProfileController extends Controller
         $request->validateWithBag('userDeletion', [
             'password' => ['required', 'current_password'],
         ]);
-
+        
+        
         $user = $request->user();
+
+        // Retrieve the user's shopping cart
+        $shoppingCart = $user->shoppingCart;
+
+        // Check if the shopping cart exists
+        if ($shoppingCart) {
+            // Delete all cart items associated with the shopping cart
+            $shoppingCart->items()->delete();
+
+            // Delete the shopping cart itself
+            $shoppingCart->delete();
+        }
 
         Auth::logout();
 
@@ -55,6 +72,6 @@ class ProfileController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return Redirect::to('/home');
+        return Redirect::to('/');
     }
 }
