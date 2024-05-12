@@ -17,6 +17,9 @@ use App\Models\Order;
 use App\Models\OrderStatus;
 use App\Models\OrderItem;
 
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
+
 
 class OrderController extends Controller
 {
@@ -77,13 +80,16 @@ class OrderController extends Controller
 
     public function pay_and_delivery(Request $request)
     {
-        
+        $selectedDelivery = $request->all()['delivery'];
+        $selectedPayment = $request->all()['payment'];
 
-        // TODO: MAKE VALIDATION LATER
-        // $request->validate([
-            //
-        // ]);
-        
+        $deliveries = Delivery::pluck('id')->toArray(); 
+        $payments = Payment::pluck('id')->toArray(); 
+
+        $request->validate([
+            'delivery' => ['required', Rule::in($deliveries)],
+            'payment' => ['required', Rule::in($payments)],
+        ]);
 
         $user = Auth::user();
         
@@ -123,9 +129,6 @@ class OrderController extends Controller
             $user = null;
         }
 
-        $selectedDelivery = $request->all()['delivery'];
-        $selectedPayment = $request->all()['payment'];
-
         $delivery = Delivery::where('id', $selectedDelivery)->first();
         $payment = Payment::where('id', $selectedPayment)->first();
 
@@ -142,13 +145,18 @@ class OrderController extends Controller
     {
         // Final stage
         
-        
-        // TODO: MAKE VALIDATION LATER
-        // $request->validate([
-            //
-        // ]);
 
-
+        // Validation rules for request inputs
+        $request->validate([
+            'email' => 'required|email:rfc,dns', //https://laravel.com/docs/9.x/validation#rule-email
+            'phone' => 'required|string',
+            'street' => 'required|string',
+            'city' => 'required|string',
+            'psc' => 'required|string|size:6',
+            'total' => 'required|numeric',
+            'payment' => 'required|json',
+            'delivery' => 'required|json',
+        ]);
 
         $user = Auth::user();
         // dd($user)
@@ -217,10 +225,6 @@ class OrderController extends Controller
                 'country' => 'Slovensko',
             ]);
         }
-
-        
-
-        // dd($orderStatusPending->id);
 
         $order = Order::create([
             'id' => Str::uuid(),

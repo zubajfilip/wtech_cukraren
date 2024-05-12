@@ -4,9 +4,17 @@ document.addEventListener('DOMContentLoaded', function() {
     // Get all payment radio buttons
     var paymentRadios = document.querySelectorAll('input[name="payment"]');
 
+    var products = document.querySelectorAll('.secr_price');
+
+    
+
     // Function to update selected options
     function updateSelectedOptions() {
         var totalSum = 0;
+        products.forEach(product => {
+            totalSum += parseFloat(product.value);
+        });
+        
         // Update selected delivery option
         deliveryRadios.forEach(function(radio) {
             if (radio.checked) {
