@@ -247,3 +247,7 @@ h2 {
 p {
     font-family: 'Playfair Display', 'Times New Roman', serif; 
 }
+
+.button-pad {
+    padding-bottom: 20px;
+}
