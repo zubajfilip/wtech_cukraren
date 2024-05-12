@@ -176,10 +176,10 @@
         <!-- <div class="price-sum">0,86€</div> -->
 
         <div class="container-fluid d-flex mb-4">
-            <div class="col-6 d-flex justify-content-left">
+            <div class="col-6 d-flex justify-content-top pad-upper">
                 <a href="/home"><button type="button" class="btn btn-secondary">Späť</button></a>
             </div>
-            <div class="col-6 d-flex justify-content-end">
+            <div class="col-6 d-flex justify-content-end pad-upper">
                 <a href="{{ url('/cart2') }}"><button type="button" class="btn btn-success">Pokračovať</button></a>
             </div>
         </div>

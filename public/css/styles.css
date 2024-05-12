@@ -251,3 +251,7 @@ p {
 .button-pad {
     padding-bottom: 20px;
 }
+
+.pad-upper {
+    padding-top: 100px;
+}
