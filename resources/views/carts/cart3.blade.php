@@ -15,7 +15,7 @@
                 <div class="circle">
                     1
                 </div>
-                <div class="text ms-2">Kosik</div>
+                <div class="text ms-2">Košík</div>
             </div>
 
             <div class=" col-12 col-sm-auto shipping-payment d-flex align-items-center me-4">
@@ -128,7 +128,7 @@
         </main>
         <div class="container-fluid d-flex mb-4 mt-2">
             <div class="col-3 d-flex justify-content-left">
-                <a href="/cart2"><button type="button" class="btn btn-secondary">Spät</button></a>
+                <a href="/cart2"><button type="button" class="btn btn-secondary">Späť</button></a>
             </div>
             <div class="col d-flex justify-content-end">
                 <input type="hidden" name="payment" value="{{ $payment }}">
