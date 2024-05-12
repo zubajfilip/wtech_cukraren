@@ -77,6 +77,8 @@
                             title="Prosím zadajte validné telefonné číslo (e.g., +421 9xx xxx xxx)">
                     </div>
                 </div>
+                <div class="text ms-2">Košík</div>
+            </div>
 
                 @php
                 $total = 0
@@ -128,6 +130,17 @@
                         <span class="col-6 text-end">{{ number_format($total, 2) }}€</span>
                     </div>
                 </div>
+            </div>
+        </main>
+        <div class="container-fluid d-flex mb-4 mt-2">
+            <div class="col-3 d-flex justify-content-left">
+                <a href="/cart2"><button type="button" class="btn btn-secondary">Späť</button></a>
+            </div>
+            <div class="col d-flex justify-content-end">
+                <input type="hidden" name="payment" value="{{ $payment }}">
+                <input type="hidden" name="delivery" value="{{ $delivery }}">
+                <input type="hidden" name="total" value="{{ $total }}">
+                <button type="submit" class="btn btn-success">Potvrdiť objednávku</button>
             </div>
         </div>
     </main>

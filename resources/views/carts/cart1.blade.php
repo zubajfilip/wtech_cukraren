@@ -15,7 +15,7 @@
                 <div class="circle circle-active">
                     <b>1</b>
                 </div>
-                <div class="text ms-2"><b>Kosik</b></div>
+                <div class="text ms-2"><b>Košík</b></div>
             </div>
 
             <div class=" col-12 col-sm-auto shipping-payment d-flex align-items-center me-4">
@@ -177,7 +177,7 @@
 
         <div class="container-fluid d-flex mb-4">
             <div class="col-6 d-flex justify-content-left">
-                <a href="/home"><button type="button" class="btn btn-secondary">Spät</button></a>
+                <a href="/home"><button type="button" class="btn btn-secondary">Späť</button></a>
             </div>
             <div class="col-6 d-flex justify-content-end">
                 <a href="{{ url('/cart2') }}"><button type="button" class="btn btn-success">Pokračovať</button></a>

@@ -109,18 +109,18 @@
                 @endforeach
                 <div class="pagination row">
                     @if ($products->currentPage() > 1)
-                        <a class="col-6 " href="{{ $products->previousPageUrl() }}">
-                            <button type="button" name="previous" class="btn btn-secondary">
-                                Predošlé
-                            </button>
+                        <a class="button-pad justify-content-start pagination-link {{ $products->hasMorePages() ? 'col-6' : 'col-12' }}" href="{{ $products->previousPageUrl() }}">
+                        <button type="button" name="previous" class="btn btn-secondary">
+                            Predošlé
+                        </button>
                         </a>
                     @endif
 
                     @if ($products->hasMorePages())
-                        <a class="col-6 d-flex justify-content-end" href="{{ $products->nextPageUrl() }}">
-                            <button type="button" name="next" class="btn btn-secondary">
-                                Ďalšie
-                            </button>
+                        <a class="button-pad d-flex justify-content-end pagination-link {{  $products->currentPage() > 1 ? 'col-6' : 'col-12'}}" href="{{ $products->nextPageUrl() }}">
+                        <button type="button" name="next" class="btn btn-secondary">
+                            Ďalšie
+                        </button>
                         </a>
                     @endif
                 </div>
