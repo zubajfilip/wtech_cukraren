@@ -19,7 +19,7 @@
                     <div class="col-md-3 col-sm-6 d-flex flex-column align-items-center justify-content-center product">
                         <img src="./storage/images/bonbons.jpg" alt="Bonboniery" class="img-fluid" width="199"
                             height="150">
-                        <p class="text-center">Bonboniery</p>
+                        <p class="text-center">Bonboniéry</p>
                     </div>
                     <div class="col-md-3 col-sm-6 d-flex flex-column align-items-center justify-content-center product">
                         <a href="/donuts">
@@ -38,7 +38,7 @@
                     <div class="col-md-3 col-sm-6 d-flex flex-column align-items-center justify-content-center product">
                         <img src="./storage/images/makronky.jpg" alt="Makrony" class="img-fluid" width="199"
                             height="150">
-                        <p class="text-center">Makróny</p>
+                        <p class="text-center">Makrónky</p>
                     </div>
                     <div class="col-md-3 col-sm-6 d-flex flex-column align-items-center justify-content-center product">
                         <img src="./storage/images/kosicky.jpg" alt="Kosicky" class="img-fluid" width="199"
