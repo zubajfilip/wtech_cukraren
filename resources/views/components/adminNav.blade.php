@@ -19,7 +19,7 @@
 
                 <form class="col d-flex" action="{{ route('searchadmin') }}" method="GET">
                     <input class="form-control me-2" type="search" name="search" placeholder="Search">
-                    <button class="btn btn-outline-success me-2" type="submit">Search</button>
+                    <button class="btn btn-outline-success me-2" type="submit">Hľadať</button>
                 </form>
                 <!-- <a href="{{ url('/profile') }}">  -->
                     <button class="btn btn-primary">Admin Rozhranie 👑</button>
@@ -36,7 +36,7 @@
 
             <form class="col d-flex" action="{{ route('searchadmin') }}" method="GET">
                 <input class="form-control me-2" type="search" name="search" placeholder="Search">
-                <button class="btn btn-outline-success me-2" type="submit">Search</button>
+                <button class="btn btn-outline-success me-2" type="submit">Hľadať</button>
             </form>
 
     </div>

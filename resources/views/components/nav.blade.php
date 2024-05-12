@@ -17,8 +17,8 @@
             <div class="col-8 collapse navbar-collapse justify-content-end">
 
             <form class="col d-flex" action="{{ route('search') }}" method="GET">
-                <input class="form-control me-2" type="search" name="search" placeholder="Search">
-                <button class="btn btn-outline-success me-2" type="submit">Search</button>
+                <input class="form-control me-2" type="search" name="search" placeholder="Na čo máte chuť ?">
+                <button class="btn btn-outline-success me-2" type="submit">Hľadať</button>
             </form>
                 @if(isset($user->email))
                     <a href="{{ url('/profile') }}"><p>{{ $user->email }}</p></a>
@@ -42,8 +42,8 @@
         
         
         <form class="col d-flex" action="{{ route('search') }}" method="GET">
-            <input class="form-control me-2 mb-2" type="search" name="search" placeholder="Search">
-            <button class="btn btn-outline-success mb-2" type="submit">Search</button>
+            <input class="form-control me-2 mb-2" type="search" name="search" placeholder="Na čo máte chuť ?">
+            <button class="btn btn-outline-success mb-2" type="submit">Hľadať</button>
         </form>
     </div>
 </header>
