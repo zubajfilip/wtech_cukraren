@@ -240,7 +240,7 @@ h2.row {
     width: 50%;
 }
 
-h2 {
+h3,h2, h1 {
     font-family: 'Prociono', 'Times New Roman', serif; /* Fallback to any serif font */
   }
   
@@ -255,3 +255,15 @@ p {
 .pad-upper {
     padding-top: 100px;
 }
+
+
+button.button-plus-minus {
+    background-color: #AAC8A7;
+    color: #000000;
+}
+
+button.button-plus-minus:hover {
+    background-color: #FFFFFF;
+    color: #000000;
+}
+

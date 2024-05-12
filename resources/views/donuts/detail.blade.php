@@ -42,9 +42,9 @@
                         }
                         @endphp
 
-                        <button type="button" class="btn btn-outline-secondary decrement-button">-</button>
+                        <button type="button" class="btn btn-outline-secondary decrement-button button-plus-minus">-</button>
                         <span class="quantity-value me-4 ms-4" style="font-size: 24px">{{$quantity}}</span>
-                        <button type="button" class="btn btn-outline-secondary increment-button">+</button>
+                        <button type="button" class="btn btn-outline-secondary increment-button button-plus-minus">+</button>
                     </div>
                     <div class="col-md-6 col-12">
                         <form action="{{ route('purchase') }}" method="post">
