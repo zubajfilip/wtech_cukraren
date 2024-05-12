@@ -12,7 +12,7 @@
         <div class="container-fluid products">
             <nav class="container-fluid">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item "><a href="/home">Domov</a></li>
+                    <li class="breadcrumb-item "><a href="/">Domov</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Donuty</li>
                 </ol>
             </nav>
@@ -113,6 +113,23 @@
                     @endif
                 </div>
                 @endforeach
+                <div class="pagination row">
+                    @if ($products->currentPage() > 1)
+                        <a class="col-6 " href="{{ $products->previousPageUrl() }}">
+                            <button type="button" name="previous" class="btn btn-secondary">
+                                Predošlé
+                            </button>
+                        </a>
+                    @endif
+
+                    @if ($products->hasMorePages())
+                        <a class="col-6 d-flex justify-content-end" href="{{ $products->nextPageUrl() }}">
+                            <button type="button" name="next" class="btn btn-secondary">
+                                Ďalšie
+                            </button>
+                        </a>
+                    @endif
+                </div>
                 @else
                 <div class="container text-center mt-3 mb-3">
                     <h2>Takéto produkty nemáme 🥺</h2>
