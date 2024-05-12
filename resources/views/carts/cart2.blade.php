@@ -80,7 +80,7 @@
 
                     <div class="col-sm-12 col-md-6 col-lg-6 shipping-cart-products">
                         @foreach($cartItemsProducts as $cartItemProduct)
-                        <div class="mb-1 d-flex justify-content-between align-items-center product-donut-choco_glaze">
+                        <div class="mb-1 d-flex justify-content-between align-items-center product-donut-choco_glaze product_">
                             <img src="{{ asset('storage/' . $cartItemProduct->imagePath) }}"
                                 alt="{{ $cartItemProduct->name }}" width="67">
                             <span class="hidden-md-up">{{$cartItemProduct->name}}</span>
@@ -89,6 +89,7 @@
                             @endphp
                             <span class="ms-1 piece-price text-end">{{$cartItemProduct->quantity}} ks /
                                 {{ number_format($productPrice, 2) }}€</span>
+                                <input hidden class="secr_price" value="{{ number_format($productPrice, 2) }}">
                         </div>
                         @endforeach
 
@@ -107,7 +108,7 @@
 
                         <div class="col-12 d-flex sum">
                             <span class="col-6">Spolu</span>
-                            <span class="col-6 text-end">6,64€</span>
+                            <span class="col-6 text-end"></span>
                         </div>
                     </div>
                 </div>
